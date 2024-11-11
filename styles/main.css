@@ -1,0 +1,6 @@
+@import url('./components/header.css');
+@import url('./components/navbar.css');
+@import url('./pages/nutrition.css');
+@import url('./pages/resources.css');
+@import url('./pages/sleep.css');
+@import url('./pages/workout.css');
