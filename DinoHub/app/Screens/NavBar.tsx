@@ -20,7 +20,7 @@ export default function NavBar() {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>(); // Add the correct type
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.navBarContainer}>
             <View style={styles.container}>
                 <TouchableOpacity
                     style={styles.Buttons}
@@ -59,18 +59,23 @@ export default function NavBar() {
 }
 
 const styles = StyleSheet.create({
+    navBarContainer: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#D6001C',
+        height: height * 0.1151,
+        zIndex: 10,
+    },
     container: {
-        display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#D6001C',
-        height: height * 0.1151,
-        width: width,
+        height: '100%',
         paddingHorizontal: 20,
     },
     Buttons: {
-        display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         padding: 10,
