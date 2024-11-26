@@ -6,10 +6,23 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavBar from './NavBar';
 
 
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+
+
+
+
 import AddButton from '../assets/CurrentWorkOutAssests/AddButton.svg';
 import Play from '../assets/CurrentWorkOutAssests/Play.svg';
 import Edit from '../assets/CurrentWorkOutAssests/Edit.svg';
 import Remove from '../assets/CurrentWorkOutAssests/Minus.svg';
+
+
+
+
+
+
 
 
 
@@ -21,7 +34,8 @@ const { height, width } = Dimensions.get('window');
 
 
 export default function CurrentWorkOut({navigation}:Props){
-    
+    const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>(); 
+
     const data = [
         {id:1,name:'Temp Template 1'},
         {id:2,name:'Temp Template 2'},
@@ -83,7 +97,12 @@ export default function CurrentWorkOut({navigation}:Props){
                                     
                                     
                                     <View style={styles.Buttons}>
-                                        <TouchableOpacity style={styles.play}>
+                                        <TouchableOpacity 
+                                            style={styles.play} 
+                                            onPress={()=>navigationTool.navigate('CurrentWorkoutPage')}
+
+                                        
+                                        >
                                             <Play />
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.edit}>

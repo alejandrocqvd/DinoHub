@@ -1,7 +1,19 @@
 import React from "react";
+import {View,Text} from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../RootStackParamList';
 
-export default function Nutrition() {
+
+type Props = NativeStackScreenProps<RootStackParamList,'Nutrition'>
+
+
+
+
+export default function Nutrition({navigation}:Props) {
     return (
-        <div>Nutrition</div>
+        <View>
+            <Text>Nutrition</Text>
+
+        </View>
     );
 }
