@@ -9,7 +9,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        animation: "none", // Disable animation
+        headerShown: false, // Optional: Disable the header
+      }}
+    >
       <Stack.Screen name="Home" component={CurrentWorkOut} />
       <Stack.Screen name="Nutrition" component={Nutrition} />
       <Stack.Screen name='CurrentWorkoutPage' component={CurrentWorkoutPage}/>
