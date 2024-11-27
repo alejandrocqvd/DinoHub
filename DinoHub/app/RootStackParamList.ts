@@ -3,4 +3,6 @@ export type RootStackParamList = {
     Nutrition: undefined;
     Header: undefined;
     CurrentWorkoutPage:undefined;
+    CurrentWorkoutPageEdit:undefined;
+
 }

@@ -106,7 +106,10 @@ export default function CurrentWorkOut({navigation}:Props){
                                             >
                                                 <Play />
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={styles.edit}>
+                                            <TouchableOpacity 
+                                                style={styles.edit}
+                                                onPress={()=>navigationTool.navigate('CurrentWorkoutPageEdit')}
+                                            >
                                                 <Edit/>
                                             </TouchableOpacity>
                                             <TouchableOpacity>

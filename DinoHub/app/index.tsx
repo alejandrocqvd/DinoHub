@@ -4,6 +4,7 @@ import { RootStackParamList } from './RootStackParamList';
 import CurrentWorkOut from './Screens/CurrentWorkOut';
 import Nutrition from './Screens/Nutrition';
 import CurrentWorkoutPage from './Screens/CurrentWorkoutPage';
+import CurrentWorkoutPageEdit from './Screens/CurrentWorkOutPageEdit';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -18,6 +19,8 @@ export default function App() {
       <Stack.Screen name="Home" component={CurrentWorkOut} />
       <Stack.Screen name="Nutrition" component={Nutrition} />
       <Stack.Screen name='CurrentWorkoutPage' component={CurrentWorkoutPage}/>
+      <Stack.Screen name='CurrentWorkoutPageEdit' component={CurrentWorkoutPageEdit}/>
+
     </Stack.Navigator>
   );
 }
