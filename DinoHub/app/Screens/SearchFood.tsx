@@ -60,7 +60,7 @@ const SearchFood = () => {
   };
 
   const renderFoodItem = ({ item }: { item: { id: string; name: string; serving: string } }) => (
-    <View style={styles.foodItem}>
+    <TouchableOpacity onPress={() => navigation.navigate("FoodInfo")} style={styles.foodItem}>
       <View style={styles.foodDetails}>
         <Text style={styles.foodName}>{item.name}</Text>
         <Text style={styles.foodServing}>{item.serving}</Text>
@@ -68,7 +68,7 @@ const SearchFood = () => {
       <TouchableOpacity style={styles.addButton}>
         <Ionicons name="add" size={24} color="#007AFF" />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

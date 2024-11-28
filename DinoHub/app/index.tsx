@@ -6,6 +6,7 @@ import Nutrition from './Screens/Nutrition';
 import CurrentWorkoutPage from './Screens/CurrentWorkoutPage';
 import CurrentWorkoutPageEdit from './Screens/CurrentWorkOutPageEdit';
 import SearchFood from './Screens/SearchFood';
+import FoodInfo from './Screens/FoodInfo';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -21,8 +22,8 @@ export default function App() {
       <Stack.Screen name="Nutrition" component={Nutrition} />
       <Stack.Screen name='CurrentWorkoutPage' component={CurrentWorkoutPage}/>
       <Stack.Screen name='CurrentWorkoutPageEdit' component={CurrentWorkoutPageEdit}/>
-
       <Stack.Screen name="SearchFood" component={SearchFood} />
+      <Stack.Screen name="FoodInfo" component={FoodInfo} />
     </Stack.Navigator>
   );
 }
