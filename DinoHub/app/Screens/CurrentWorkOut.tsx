@@ -1,4 +1,4 @@
-import {View, Text,StyleSheet, TouchableOpacity,Dimensions} from 'react-native';
+import {View, Text,StyleSheet, TouchableOpacity,Dimensions,ScrollView} from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../RootStackParamList';
 import Header from './Header';
@@ -6,10 +6,23 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavBar from './NavBar';
 
 
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+
+
+
+
 import AddButton from '../assets/CurrentWorkOutAssests/AddButton.svg';
 import Play from '../assets/CurrentWorkOutAssests/Play.svg';
 import Edit from '../assets/CurrentWorkOutAssests/Edit.svg';
 import Remove from '../assets/CurrentWorkOutAssests/Minus.svg';
+
+
+
+
+
+
 
 
 
@@ -21,7 +34,8 @@ const { height, width } = Dimensions.get('window');
 
 
 export default function CurrentWorkOut({navigation}:Props){
-    
+    const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>(); 
+
     const data = [
         {id:1,name:'Temp Template 1'},
         {id:2,name:'Temp Template 2'},
@@ -67,39 +81,53 @@ export default function CurrentWorkOut({navigation}:Props){
                         <TouchableOpacity style={styles.AddBtnBox}>
                             <AddButton/>
                         </TouchableOpacity>
-                    </View>
+                </View> 
 
 
 
                     
-
 
                     <View style={styles.Content}>
-                        {
-                    
-                            data.map((item)=>(
-                                <View style={styles.ContentBox} key={item.id}>
-                                    <Text>{item.name}</Text>
-                                    
-                                    
-                                    <View style={styles.Buttons}>
-                                        <TouchableOpacity style={styles.play}>
-                                            <Play />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={styles.edit}>
-                                            <Edit/>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity>
-                                            <Remove/>
-                                        </TouchableOpacity>
+                        
+                        <ScrollView >
+                            {
+                        
+                                data.map((item)=>(
+                                    <View style={styles.ContentBox} key={item.id}>
+                                        <Text>{item.name}</Text>
+                                        
+                                        
+                                        <View style={styles.Buttons}>
+                                            <TouchableOpacity 
+                                                style={styles.play} 
+                                                onPress={()=>navigationTool.navigate('CurrentWorkoutPage')}
+
+                                            
+                                            >
+                                                <Play />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity 
+                                                style={styles.edit}
+                                                onPress={()=>navigationTool.navigate('CurrentWorkoutPageEdit')}
+                                            >
+                                                <Edit/>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity>
+                                                <Remove/>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
-                                </View>
-                            ))
-                    
-                    
-                    
-                    }
+                                ))
+                        
+                        
+                        
+                        }
+                        </ScrollView>
+
+
+
                     </View>
+                    
 
 
 
@@ -139,6 +167,7 @@ const styles = StyleSheet.create({
         display:'flex',
         // flexDirection:'column',
         // marginTop:-116,
+        flex:1,
         justifyContent:'space-between',
         height:height*(670/851)
     },
@@ -149,7 +178,10 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-evenly',
         height:height*(74/851),
-        width:width
+        width:width,
+        marginBottom:20
+        // flex:2
+        // paddingBottom:height*(595/851)
     },
 
 
@@ -176,7 +208,8 @@ const styles = StyleSheet.create({
         display:'flex',
         marginLeft:width*0.8409,
         justifyContent:'flex-end',
-        // marginBottom:height*(300/851)
+        // flex:1
+        marginBottom:20
     },
 
 
@@ -186,7 +219,8 @@ const styles = StyleSheet.create({
         alignItems:'center',
         marginBottom:height*(60/851),
         height:height*(450/851),
-        width:width
+        width:width,
+        flex:3
     },
 
     ContentBox:{
