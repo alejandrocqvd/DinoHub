@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
 
 
     Header:{
+        marginTop:20,
         width:width,
         flex:1,
         display:'flex',
@@ -157,6 +158,8 @@ const styles = StyleSheet.create({
 
 
     Content:{
+        // backgroundColor:'yellow',
+        marginBottom:95,
         flex:6,
         display:'flex',
         width:width,
@@ -166,7 +169,7 @@ const styles = StyleSheet.create({
     },
 
     Boxes:{
-        backgroundColor:'yellow',
+        backgroundColor:'#F2F4FB',
         marginBottom:height*(30/851),
         width:width*(314/393),
         height:height*(220/851),

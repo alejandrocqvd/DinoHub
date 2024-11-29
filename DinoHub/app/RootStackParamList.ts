@@ -4,5 +4,6 @@ export type RootStackParamList = {
     Header: undefined;
     CurrentWorkoutPage:undefined;
     CurrentWorkoutPageEdit:undefined;
+    CurrentWorkoutPageAdd:undefined;
 
 }

@@ -16,7 +16,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AddButton from '../assets/CurrentWorkOutAssests/AddButton.svg';
 import Play from '../assets/CurrentWorkOutAssests/Play.svg';
 import Edit from '../assets/CurrentWorkOutAssests/Edit.svg';
-import Remove from '../assets/CurrentWorkOutAssests/Minus.svg';
+import Remove from '../assets/CurrentWorkOutAssests/Minus (1).svg';
 
 
 
@@ -78,7 +78,7 @@ export default function CurrentWorkOut({navigation}:Props){
 
 
                     <View>
-                        <TouchableOpacity style={styles.AddBtnBox}>
+                        <TouchableOpacity onPress={()=>navigationTool.navigate('CurrentWorkoutPageAdd')} style={styles.AddBtnBox}>
                             <AddButton/>
                         </TouchableOpacity>
                 </View> 

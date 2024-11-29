@@ -5,6 +5,7 @@ import CurrentWorkOut from './Screens/CurrentWorkOut';
 import Nutrition from './Screens/Nutrition';
 import CurrentWorkoutPage from './Screens/CurrentWorkoutPage';
 import CurrentWorkoutPageEdit from './Screens/CurrentWorkOutPageEdit';
+import CurrentWorkOutAdd from './Screens/CurrentWorkOutAdd';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -20,7 +21,7 @@ export default function App() {
       <Stack.Screen name="Nutrition" component={Nutrition} />
       <Stack.Screen name='CurrentWorkoutPage' component={CurrentWorkoutPage}/>
       <Stack.Screen name='CurrentWorkoutPageEdit' component={CurrentWorkoutPageEdit}/>
-
+      <Stack.Screen name='CurrentWorkoutPageAdd' component={CurrentWorkOutAdd}/>
     </Stack.Navigator>
   );
 }
