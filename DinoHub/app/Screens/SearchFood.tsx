@@ -65,9 +65,9 @@ const SearchFood = () => {
         <Text style={styles.foodName}>{item.name}</Text>
         <Text style={styles.foodServing}>{item.serving}</Text>
       </View>
-      <TouchableOpacity style={styles.addButton}>
+      <View style={styles.addButton}>
         <Ionicons name="add" size={24} color="#007AFF" />
-      </TouchableOpacity>
+      </View>
     </TouchableOpacity>
   );
 

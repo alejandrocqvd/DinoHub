@@ -18,7 +18,7 @@ export default function FoodInfo() {
       <View style={styles.foodInfoContent}>
         {/* Header and Back Arrow */}
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("Nutrition")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SearchFood")}>
             <Ionicons name="arrow-back" size={24} color="#000" />   
           </TouchableOpacity>
           <Text style={styles.headerText}>Eggs</Text>
@@ -39,28 +39,31 @@ export default function FoodInfo() {
 
           <View style={styles.horizontalLine} />
 
-          <View>
-            <View>
-              <Text>Calories</Text>
-              <TextInput></TextInput>
+          <View style={styles.macrosData}>
+            <View style={styles.macroData}>
+              <Text style={styles.macroText}>Calories</Text>
+              <TextInput style={styles.textInput2}></TextInput>
             </View>
-            <View>
-              <Text>Carbs</Text>
-              <TextInput></TextInput>
+            <View style={styles.macroData}>
+              <Text style={styles.macroText}>Carbs</Text>
+              <TextInput style={styles.textInput2}></TextInput>
             </View>
-            <View>
-              <Text>Fat</Text>
-              <TextInput></TextInput>
+            <View style={styles.macroData}>
+              <Text style={styles.macroText}>Fat</Text>
+              <TextInput style={styles.textInput2}></TextInput>
             </View>
-            <View>
-              <Text>Protein</Text>
-              <TextInput></TextInput>
+            <View style={styles.macroData}>
+              <Text style={styles.macroText}>Protein</Text>
+              <TextInput style={styles.textInput2}></TextInput>
             </View>
           </View>
         </View>
 
-        <TouchableOpacity>
-          <Text>ADD FOOD</Text>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => navigation.navigate('Nutrition')}
+        >
+          <Text style={styles.addButtonText}>ADD FOOD</Text>
         </TouchableOpacity>
       </View>
 
@@ -120,12 +123,50 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 100,
     padding: 5,
+    backgroundColor: "#f8f8f8",
   },
   horizontalLine: {
     height: 1,
     backgroundColor: "#D3D3D3",
     marginBottom: 15,
     width: "100%",
+  },
+  macrosData: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  macroData: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  macroText: {
+    textAlign: "center",
+    margin: "auto",
+    marginBottom: 10,
+  },
+  textInput2: {
+    borderWidth: 1,
+    borderRadius: 5,
+    width: 70,
+    padding: 5,
+    marginBottom: 20,
+    backgroundColor: "#f8f8f8",
+  },
+  addButton: {
+    backgroundColor: "#D6001C",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 10,
+    width: "100%"
+  },
+  addButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 
