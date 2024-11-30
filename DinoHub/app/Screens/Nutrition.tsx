@@ -10,6 +10,9 @@ import {
 import Header from "./Header";
 import NavBar from "./NavBar";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from '../RootStackParamList'; 
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 // Interfaces
 interface FoodItemType {
@@ -67,26 +70,33 @@ const FoodItem: React.FC<FoodItemType> = ({ name, serving, calories }) => (
   </View>
 );
 
-const MealSection: React.FC<{ meal: MealType }> = ({ meal }) => (
-  <View style={styles.mealSection}>
-    <View style={styles.foodColumns}>
-      <Text style={styles.mealTime}>{meal.time}</Text>
-      <Text style={styles.totalCalories}>{meal.totalCalories} kcal</Text>
+const MealSection: React.FC<{ meal: MealType }> = ({ meal }) => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  return (
+    <View style={styles.mealSection}>
+      <View style={styles.foodColumns}>
+        <Text style={styles.mealTime}>{meal.time}</Text>
+        <Text style={styles.totalCalories}>{meal.totalCalories} kcal</Text>
+      </View>
+      {meal.items.map((item) => (
+        <FoodItem
+          key={item.id}
+          id={item.id}
+          name={item.name}
+          serving={item.serving}
+          calories={item.calories}
+        />
+      ))}
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => navigation.navigate('SearchFood')}
+      >
+        <Text style={styles.addButtonText}>ADD FOOD</Text>
+      </TouchableOpacity>
     </View>
-    {meal.items.map((item) => (
-      <FoodItem
-        key={item.id}
-        id={item.id}
-        name={item.name}
-        serving={item.serving}
-        calories={item.calories}
-      />
-    ))}
-    <TouchableOpacity style={styles.addButton}>
-      <Text style={styles.addButtonText}>ADD FOOD</Text>
-    </TouchableOpacity>
-  </View>
-);
+  );
+};
 
 const Nutrition = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
