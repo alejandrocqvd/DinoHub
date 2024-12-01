@@ -67,7 +67,7 @@ export default function CurrentWorkOut({navigation}:Props){
                             <Text style={styles.InnerNavBtnText} >Templates</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.InnerNavBtn} >
+                        <TouchableOpacity onPress={()=>navigationTool.navigate('History')} style={styles.InnerNavBtn} >
                             <Text style={styles.InnerNavBtnText} >History</Text>
                         </TouchableOpacity>
 
