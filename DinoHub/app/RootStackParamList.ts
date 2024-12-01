@@ -8,4 +8,5 @@ export type RootStackParamList = {
     CurrentWorkoutPageAdd:undefined;
     SearchFood: undefined;
     History:undefined;
+    FoodEditInfo: undefined;
 }

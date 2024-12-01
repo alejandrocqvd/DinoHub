@@ -7,17 +7,17 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../RootStackParamList";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export default function FoodInfo() {
+export default function FoodEditInfo() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const foodData = {
-    name: "Eggs",
-    servingSize: "1 large",
-    numOfServings: 3,
-    calories: "214",
-    carbohydrates: "1.4 g",
-    fat: "14.9 g",
-    protein: "18.6 g",
+    name: "Oikos Vanilla Yoghurt",
+    servingSize: "1 Cup",
+    numOfServings: 2,
+    calories: "240",
+    carbohydrates: "38 g",
+    fat: "0 g",
+    protein: "24 g",
   };
 
   return (
@@ -28,7 +28,7 @@ export default function FoodInfo() {
       <View style={styles.foodInfoContent}>
         {/* Header and Back Arrow */}
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.navigate("SearchFood")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Nutrition")}>
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
           <Text style={styles.headerText}>{foodData.name}</Text>
@@ -91,7 +91,7 @@ export default function FoodInfo() {
           style={styles.addButton}
           onPress={() => navigation.navigate("Nutrition")}
         >
-          <Text style={styles.addButtonText}>ADD FOOD</Text>
+          <Text style={styles.addButtonText}>SAVE FOOD</Text>
         </TouchableOpacity>
       </View>
 

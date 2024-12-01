@@ -9,6 +9,8 @@ import CurrentWorkOutAdd from './Screens/CurrentWorkOutAdd';
 import SearchFood from './Screens/SearchFood';
 import FoodInfo from './Screens/FoodInfo';
 import History from './Screens/History';
+import FoodEditInfo from './Screens/FoodEditInfo';
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
@@ -27,6 +29,7 @@ export default function App() {
       <Stack.Screen name="SearchFood" component={SearchFood} />
       <Stack.Screen name="FoodInfo" component={FoodInfo} />
       <Stack.Screen name='History' component={History}/>
+      <Stack.Screen name="FoodEditInfo" component={FoodEditInfo} />
     </Stack.Navigator>
   );
 }
