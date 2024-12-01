@@ -440,11 +440,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: 100,
+    flex: 1,
   },
   macroColumnText: {
     fontSize: 16,
+    width: 50,
     fontWeight: "bold",
-    textAlign: "center",
+    textAlign: "right",
   },
   macros: {
     backgroundColor: "#fff",
