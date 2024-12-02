@@ -7,5 +7,7 @@ export type RootStackParamList = {
   FoodInfo: undefined;
   CurrentWorkoutPageAdd: undefined;
   SearchFood: undefined;
+  History: undefined;
+  FoodEditInfo: undefined;
   Sleep: undefined;
 };
