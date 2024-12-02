@@ -10,4 +10,5 @@ export type RootStackParamList = {
   History: undefined;
   FoodEditInfo: undefined;
   Sleep: undefined;
+  EditHistorical: undefined;
 };

@@ -11,6 +11,7 @@ import FoodInfo from "./Screens/FoodInfo";
 import History from "./Screens/History";
 import FoodEditInfo from "./Screens/FoodEditInfo";
 import Sleep from "./Screens/Sleep";
+import EditHistorical from "./Screens/EditHistorical";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -38,6 +39,9 @@ export default function App() {
       <Stack.Screen name="History" component={History} />
       <Stack.Screen name="FoodEditInfo" component={FoodEditInfo} />
       <Stack.Screen name="Sleep" component={Sleep} />
+      <Stack.Screen name="EditHistorical" component={EditHistorical}/>
+
+
     </Stack.Navigator>
   );
 }

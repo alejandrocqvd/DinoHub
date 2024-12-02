@@ -48,7 +48,7 @@ export default function History({navigation}:Props){
                 <View style={styles.ContentHeader}>
                     <Text style={styles.ContentHeadersmthn}>Date here</Text>
 
-                    <TouchableOpacity style={styles.ContentHeadersmthn}>
+                    <TouchableOpacity style={styles.ContentHeadersmthn} onPress={()=>navigationTool.navigate('EditHistorical')}>
                         <Edit/>
                     </TouchableOpacity>
 
