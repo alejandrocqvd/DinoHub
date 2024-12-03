@@ -1,7 +1,7 @@
-import {View,Text,StyleSheet, TouchableOpacity,Dimensions, ScrollView} from 'react-native';
+import {View,Text,StyleSheet, TouchableOpacity,Dimensions, ScrollView,TextInput} from 'react-native';
 import NavBar from './NavBar';
 import Header from './Header';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../RootStackParamList';
 
 
@@ -9,6 +9,12 @@ import BackButton from '../assets/CurrentWorkOutAssests/BackButton.svg';
 import AddButton from '../assets/CurrentWorkOutAssests/Add.svg';
 import RemoveButton from '../assets/CurrentWorkOutAssests/Minus.svg';
 import SaveButton from '../assets/CurrentWorkOutAssests/Save.svg';
+import { useNavigation } from 'expo-router';
+
+
+import { getCurrentData,getCurrentID } from './WorkoutSessionData';
+import { useEffect, useState } from 'react';
+
 
 type Props= NativeStackScreenProps<RootStackParamList,'CurrentWorkoutPageEdit'> 
 const { height, width } = Dimensions.get('window');
@@ -17,11 +23,34 @@ const { height, width } = Dimensions.get('window');
 export default function CurrentWorkoutPageEdit({navigation}:Props){
 
 
-    const data = [
-        { id: 1, name: 'Tricep pushdowns' },
-        { id: 2, name: 'Skull crushers' },
-        { id: 3, name: 'Major Bruh Alert' },
-    ];
+
+
+
+    const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    
+    const [data, setData] = useState(
+        getCurrentData()
+            .filter((item) => item.TemplateID === getCurrentID())
+            .map((item) => item.TemplateData)
+            .flat()
+    );
+
+    const otherData =getCurrentData()
+    .filter((item)=>item.TemplateID===getCurrentID())
+    .map((item)=>item.TemplateSets)
+    .flat();
+
+    console.log(otherData);
+
+    const AddExcercise = () => {
+        const currentHighestID = data[data.length - 1]?.DataId || 0;
+        setData([...data, { DataId: currentHighestID + 1, DataName: "New Excercise" }]);
+    };
+
+    const RemoveExcercise = () => {
+        setData((prevData) => prevData.slice(0, -1));
+    };
+    
 
     return(
         <View style={styles.container}>
@@ -30,16 +59,29 @@ export default function CurrentWorkoutPageEdit({navigation}:Props){
 
             <View style ={styles.Header}>
                 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigationTool.navigate('Home')}>
                     <BackButton/>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=>{
+
+                        RemoveExcercise()
+
+
+                    }}
+                
+                
+                >
                     <RemoveButton/>
                 </TouchableOpacity>
 
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>{
+                    
+                    AddExcercise()
+
+                }}>
                     <AddButton/>
                 </TouchableOpacity>
 
@@ -57,21 +99,35 @@ export default function CurrentWorkoutPageEdit({navigation}:Props){
 
                     {
                         data.map((item)=>(
-                            <View key={item.id} style={styles.Boxes}>
-                                <Text>
-                                    {item.name} {item.id}
-                                </Text>
-                                <Text>
-                                    Set
-                                </Text>
+                            <View key={item?.DataId} style={styles.Boxes}>
+                                
 
-                                <Text>
-                                    Rep
-                                </Text>
+                                <TextInput
+                                    value={item?.DataName}
+                                    onChangeText={(text) => {
+                                        setData((prevData) =>
+                                            prevData.map((d) =>
+                                                d?.DataId === item?.DataId ? { ...d, DataName: text } : d
+                                            )
+                                        );
+                                    }}
+                                />
 
-                                <Text>
-                                    Weight
-                                </Text>
+
+
+                                {
+                                    otherData
+                                    .filter((info)=>info?.ExcerciseId===item?.DataId)
+                                    .map((info)=>(
+                                        <View key= {info?.id} style={styles.Info}>
+                                            <Text>Sets: {info?.set}</Text>
+                                            <Text>Reps: {info?.reps}</Text>
+                                            <Text>Weight: {info?.weight}</Text>
+                                        </View>
+                                        
+
+                                    ))
+                                }
 
 
 
@@ -157,6 +213,16 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'space-between',
         alignItems:'center'
+    },
+
+    Info:{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-evenly',
+        width:width*(225/393),
+        height:height*(220/851),
+        alignItems:'center'
+
     },
 
 

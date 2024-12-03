@@ -52,11 +52,10 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
     .map((item) => item.TemplateData)
     .flat();
 
-    console.log(getCurrentID())
 
     const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-    const AddASet = (exerciseId: number) => {
+    const AddASet = (exerciseId: number|undefined) => {
         const currentHighestID = sets[sets.length - 1]?.id || 0;
         setSets([
             ...sets,
@@ -71,7 +70,7 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
                 <TouchableOpacity onPress={() => navigationTool.navigate('Home')} style={styles.backButton}>
                     <BackButton />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.doneButton}>
+                <TouchableOpacity onPress={() => navigationTool.navigate('Home')} style={styles.doneButton}>
                     <DoneButton />
                 </TouchableOpacity>
             </View>
