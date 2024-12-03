@@ -170,47 +170,20 @@ export const addToTemplate = (
     templateData: TemplateData[],
     templateSets: TemplateSets[]
   ): void => {
-    const template = currentData.filter((item) => item.TemplateID === templateID);
     
-    console.log(templateID)
-
-    // console.log("addToTemplate Function called")
-
-    // console.log(template)
-
-    // console.log(
-
-    //     templateData.map((item)=>item.DataName)
-
-
-    // )
-
-
-    const oldTemplateData = currentData
-    .filter((item)=>item.TemplateID===templateID)
-    .map((item)=>item.TemplateSets)
-    .flat()
-
-    console.log(oldTemplateData)
-
     const TemplateIndex = currentData.findIndex((item)=>item.TemplateID===templateID)
-
-
     currentData[TemplateIndex].TemplateData=templateData
     currentData[TemplateIndex].TemplateSets=templateSets
 
-
-    console.log("--------------------------------------")
-
-
-    console.log(
-        currentData
-        .filter((item)=>item.TemplateID===templateID)
-        .map((item)=>item.TemplateSets)
-        .flat()
-    )
-
-    
   };
-  
+
+export const addTemplate = ():void =>{
+
+    const last_element = currentData[currentData.length-1].TemplateID;
+    setCurrentId(last_element+1)
+
+
+
+
+}
 

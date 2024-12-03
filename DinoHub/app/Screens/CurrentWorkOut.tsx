@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavBar from './NavBar';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { getCurrentData, setCurrentId } from './WorkoutSessionData';
+import { getCurrentData, setCurrentId,addTemplate } from './WorkoutSessionData';
 
 import AddButton from '../assets/CurrentWorkOutAssests/AddButton.svg';
 import Play from '../assets/CurrentWorkOutAssests/Play.svg';
@@ -44,7 +44,19 @@ export default function CurrentWorkOut({ navigation }: Props) {
         </View>
 
         <View>
-          <TouchableOpacity onPress={() => navigationTool.navigate('CurrentWorkoutPageAdd')} style={styles.AddBtnBox}>
+          <TouchableOpacity onPress={() => {
+            
+            navigationTool.navigate('CurrentWorkoutPageAdd');
+            addTemplate();
+          
+          
+          
+          }
+            
+            
+            
+            
+            } style={styles.AddBtnBox}>
             <AddButton />
           </TouchableOpacity>
         </View>

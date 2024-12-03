@@ -47,6 +47,7 @@ export default function CurrentWorkoutPageEdit({ navigation }: Props) {
 
   const RemoveExcercise = () => {
     setData((prevData) => prevData.slice(0, -1));
+    setOtherData((prev)=>prev.slice(0,-1));
   };
 
 
@@ -80,21 +81,7 @@ export default function CurrentWorkoutPageEdit({ navigation }: Props) {
   
 
 
-  // console.log(
-  //   getCurrentData()
-  //   .filter((item)=>item.TemplateID===getCurrentID())
-  //   .map((item)=>item.TemplateData)
-  //   .flat()
-  // )
-  // console.log("--------------------------------------------------")
-  // console.log(
-  //   getCurrentData()
-  //   .filter((item)=>item.TemplateID===getCurrentID())
-  //   .map((item)=>item.TemplateSets)
-  //   .flat()
-  // )
 
-  // console.log(data)
 
 
   return (
@@ -114,7 +101,7 @@ export default function CurrentWorkoutPageEdit({ navigation }: Props) {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={()=>{
-          // navigationTool.navigate('Home')
+          navigationTool.navigate('Home')
           handleAddToTemplate()
 
         }}>

@@ -3,7 +3,9 @@ import NavBar from './NavBar';
 import Header from './Header';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../RootStackParamList';
-
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { getCurrentID,getCurrentData } from './WorkoutSessionData';
 
 import BackButton from '../assets/CurrentWorkOutAssests/BackButton.svg';
 import AddButton from '../assets/CurrentWorkOutAssests/Add.svg';
@@ -15,7 +17,13 @@ const { height, width } = Dimensions.get('window');
 
 
 export default function CurrentWorkOutAdd({navigation}:Props){
+    const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    
+    
     return(
+
+
 
         <View style={styles.container}>
 
@@ -24,7 +32,7 @@ export default function CurrentWorkOutAdd({navigation}:Props){
 
             <View style ={styles.Header}>
                 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigationTool.navigate('Home')}>
                     <BackButton/>
                 </TouchableOpacity>
 
