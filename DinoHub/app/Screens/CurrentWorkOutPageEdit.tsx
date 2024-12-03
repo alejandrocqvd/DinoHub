@@ -10,14 +10,16 @@ import RemoveButton from '../assets/CurrentWorkOutAssests/Minus.svg';
 import SaveButton from '../assets/CurrentWorkOutAssests/Save.svg';
 import { useNavigation } from 'expo-router';
 
-import { getCurrentData, getCurrentID } from './WorkoutSessionData';
-import { useState } from 'react';
+import { getCurrentData, getCurrentID,addToTemplate,TemplateData,setCurrentId } from './WorkoutSessionData';
+import { useState, useRef } from 'react';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CurrentWorkoutPageEdit'>;
 const { height, width } = Dimensions.get('window');
 
 export default function CurrentWorkoutPageEdit({ navigation }: Props) {
   const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+
 
   const [data, setData] = useState(
     getCurrentData()
@@ -26,19 +28,30 @@ export default function CurrentWorkoutPageEdit({ navigation }: Props) {
       .flat()
   );
 
-  const otherData = getCurrentData()
+  const [otherData,setOtherData] = useState( getCurrentData()
     .filter((item) => item.TemplateID === getCurrentID())
     .map((item) => item.TemplateSets)
-    .flat();
+    .flat());
 
   const AddExcercise = () => {
     const currentHighestID = data[data.length - 1]?.DataId || 0;
+    const currentHighestOther = otherData[otherData.length-1]?.id ||0;
     setData([...data, { DataId: currentHighestID + 1, DataName: 'New Exercise' }]);
+    setOtherData([...otherData,{ExcerciseId:currentHighestID+1,id:currentHighestOther+1,set:0,reps:0,weight:0}])
   };
+
+
+
+
+
 
   const RemoveExcercise = () => {
     setData((prevData) => prevData.slice(0, -1));
   };
+
+
+  
+
 
   // Function to update set, rep, or weight
   const handleUpdateInfo = (dataId: number, field: string, value: string) => {
@@ -57,6 +70,33 @@ export default function CurrentWorkoutPageEdit({ navigation }: Props) {
     );
   };
 
+  const handleAddToTemplate = () => {
+    const currentID = getCurrentID();
+    const validData = data.filter((item): item is TemplateData => !!item);
+    const validOtherData = otherData.filter((info) => !!info); // Ensure no undefined in otherData
+  
+    addToTemplate(currentID,validData,validOtherData);
+  };
+  
+
+
+  // console.log(
+  //   getCurrentData()
+  //   .filter((item)=>item.TemplateID===getCurrentID())
+  //   .map((item)=>item.TemplateData)
+  //   .flat()
+  // )
+  // console.log("--------------------------------------------------")
+  // console.log(
+  //   getCurrentData()
+  //   .filter((item)=>item.TemplateID===getCurrentID())
+  //   .map((item)=>item.TemplateSets)
+  //   .flat()
+  // )
+
+  // console.log(data)
+
+
   return (
     <View style={styles.container}>
       <Header />
@@ -73,7 +113,11 @@ export default function CurrentWorkoutPageEdit({ navigation }: Props) {
           <AddButton />
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{
+          // navigationTool.navigate('Home')
+          handleAddToTemplate()
+
+        }}>
           <SaveButton />
         </TouchableOpacity>
       </View>

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 
 
-interface TemplateData {
+export interface TemplateData {
     DataId?:number;
     DataName?:string;
 }
@@ -164,3 +164,53 @@ export const setCurrentId = (id:number): void=>{
 export const getCurrentID = (): number=>{
     return Currentid;
 }
+
+export const addToTemplate = (
+    templateID: number,
+    templateData: TemplateData[],
+    templateSets: TemplateSets[]
+  ): void => {
+    const template = currentData.filter((item) => item.TemplateID === templateID);
+    
+    console.log(templateID)
+
+    // console.log("addToTemplate Function called")
+
+    // console.log(template)
+
+    // console.log(
+
+    //     templateData.map((item)=>item.DataName)
+
+
+    // )
+
+
+    const oldTemplateData = currentData
+    .filter((item)=>item.TemplateID===templateID)
+    .map((item)=>item.TemplateSets)
+    .flat()
+
+    console.log(oldTemplateData)
+
+    const TemplateIndex = currentData.findIndex((item)=>item.TemplateID===templateID)
+
+
+    currentData[TemplateIndex].TemplateData=templateData
+    currentData[TemplateIndex].TemplateSets=templateSets
+
+
+    console.log("--------------------------------------")
+
+
+    console.log(
+        currentData
+        .filter((item)=>item.TemplateID===templateID)
+        .map((item)=>item.TemplateSets)
+        .flat()
+    )
+
+    
+  };
+  
+
