@@ -3,7 +3,9 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../RootStackParamList';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+
+import { getCurrentID,getCurrentData } from './WorkoutSessionData';
 
 
 import Header from './Header';
@@ -26,17 +28,31 @@ const { height, width } = Dimensions.get('window');
 
 
 export default function CurrentWorkoutPage({ navigation }: Props) {
-    const [sets, setSets] = useState([
-        { ExcerciseId: 1, id: 1, set: 0, reps: 0, weight: 0 },
-        { ExcerciseId: 2, id: 2, set: 0, reps: 0, weight: 0 },
-        { ExcerciseId: 1, id: 3, set: 0, reps: 0, weight: 0 },
-    ]);
+    // const [sets, setSets] = useState([
+    //     { ExcerciseId: 1, id: 1, set: 0, reps: 0, weight: 0 },
+    //     { ExcerciseId: 2, id: 2, set: 0, reps: 0, weight: 0 },
+    //     { ExcerciseId: 1, id: 3, set: 0, reps: 0, weight: 0 },
+    // ]);
 
-    const data = [
-        { id: 1, name: 'Tricep pushdowns' },
-        { id: 2, name: 'Skull crushers' },
-        { id: 3, name: 'Major Bruh Alert' },
-    ];
+    const [sets, setSets] = useState<any[]>([]);
+
+    useEffect(() => {
+        // Get the matching TemplateSets for the current TemplateID
+        const filteredSets = getCurrentData()
+            .filter((item) => item.TemplateID === getCurrentID())
+            .map((item) => item.TemplateSets)
+            .flat(); // Flatten the array if TemplateSets is nested
+
+        setSets(filteredSets || []); // Initialize state with filtered sets
+    }, []);
+
+
+    const data = getCurrentData()
+    .filter((item) => item.TemplateID === getCurrentID())
+    .map((item) => item.TemplateData)
+    .flat();
+
+    console.log(getCurrentID())
 
     const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -62,12 +78,13 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
             <View style={styles.Content}>
                 <ScrollView>
                     {data.map((item) => (
-                        <View key={item.id} style={styles.Boxes}>
+                        
+                        <View key={item?.DataId} style={styles.Boxes}>
                             <Text>
-                                {item.name} {item.id}
+                                {item?.DataName} {item?.DataId}
                             </Text>
                             {sets
-                                .filter((info) => info.ExcerciseId === item.id)
+                                .filter((info) => info.ExcerciseId === item?.DataId)
                                 .map((info) => (
                                     <View key={info.id} style={styles.Info}>
                                         <TextInput
@@ -114,7 +131,7 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
                                         />
                                     </View>
                                 ))}
-                            <TouchableOpacity onPress={() => AddASet(item.id)}>
+                            <TouchableOpacity onPress={() => AddASet(item?.DataId)}>
                                 <Text style={styles.Add}>Add a set</Text>
                             </TouchableOpacity>
                         </View>

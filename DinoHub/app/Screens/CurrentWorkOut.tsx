@@ -9,7 +9,7 @@ import NavBar from './NavBar';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-
+import {  getCurrentData, setCurrentId } from './WorkoutSessionData';
 
 
 
@@ -35,6 +35,7 @@ const { height, width } = Dimensions.get('window');
 
 export default function CurrentWorkOut({navigation}:Props){
     const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>(); 
+
 
     const data = [
         {id:1,name:'Temp Template 1'},
@@ -92,15 +93,20 @@ export default function CurrentWorkOut({navigation}:Props){
                         <ScrollView >
                             {
                         
-                                data.map((item)=>(
-                                    <View style={styles.ContentBox} key={item.id}>
-                                        <Text>{item.name}</Text>
+                                getCurrentData().map((item)=>(
+                                    <View style={styles.ContentBox} key={item.TemplateID}>
+                                        <Text>{item.NameTemplate}</Text>
                                         
                                         
                                         <View style={styles.Buttons}>
                                             <TouchableOpacity 
                                                 style={styles.play} 
-                                                onPress={()=>navigationTool.navigate('CurrentWorkoutPage')}
+                                                onPress={()=>{
+                                                    navigationTool.navigate('CurrentWorkoutPage');
+                                                    const value:number = item.TemplateID??0;
+                                                    setCurrentId(value);
+                                                    
+                                                }}
 
                                             
                                             >
@@ -108,7 +114,12 @@ export default function CurrentWorkOut({navigation}:Props){
                                             </TouchableOpacity>
                                             <TouchableOpacity 
                                                 style={styles.edit}
-                                                onPress={()=>navigationTool.navigate('CurrentWorkoutPageEdit')}
+                                                onPress={()=>{
+                                                    navigationTool.navigate('CurrentWorkoutPageEdit')
+                                                    const value:number = item.TemplateID??0;
+                                                    setCurrentId(value);
+                                                
+                                                }}
                                             >
                                                 <Edit/>
                                             </TouchableOpacity>
@@ -127,6 +138,15 @@ export default function CurrentWorkOut({navigation}:Props){
 
 
                     </View>
+                        
+
+
+
+
+
+
+
+
                     
 
 
@@ -233,13 +253,13 @@ const styles = StyleSheet.create({
         height:height*(38/851),
         marginBottom:height*(30/851),
         borderColor:'black',
-        borderWidth:1
+        borderWidth:1,
     },
 
     Buttons:{
         // backgroundColor:'yellow',
-        paddingLeft:50,
-        paddingRight:80,
+        // paddingLeft:50,
+        // paddingRight:80,
         display:'flex',
         flexDirection:'row',
         justifyContent:'space-evenly',
