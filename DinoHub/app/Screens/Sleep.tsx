@@ -25,6 +25,12 @@ export default function Sleep({ navigation }: Props) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
+  const checkDate = () => {
+    if (currentDate.toDateString() === new Date().toDateString()) {
+      return false;
+    }
+    return true;
+  };
   // Handlers for date navigation
   const handlePreviousDate = () => {
     const previousDate = new Date(currentDate);
@@ -35,7 +41,9 @@ export default function Sleep({ navigation }: Props) {
   const handleNextDate = () => {
     const nextDate = new Date(currentDate);
     nextDate.setDate(nextDate.getDate() + 1);
-    setCurrentDate(nextDate);
+    if (checkDate()) {
+      setCurrentDate(nextDate);
+    }
   };
 
   const showDatePicker = () => {
@@ -60,19 +68,13 @@ export default function Sleep({ navigation }: Props) {
             <Text style={styles.InnerNavBtnText}>Data Tracker</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.InnerNavBtn}>
+          <TouchableOpacity
+            style={styles.InnerNavBtn}
+            onPress={() => navigationTool.navigate("SleepTrends")}
+          >
             <Text style={styles.InnerNavBtnText}>Sleep Trends</Text>
           </TouchableOpacity>
         </View>
-
-        {/* <View>
-          <TouchableOpacity
-            onPress={() => navigationTool.navigate("CurrentWorkoutPageAdd")}
-            style={styles.AddBtnBox}
-          >
-            <AddButton />
-          </TouchableOpacity>
-        </View> */}
 
         <View style={styles.secondContainer}>
           <View style={styles.watchButton}>
@@ -123,14 +125,6 @@ export default function Sleep({ navigation }: Props) {
               <Text style={styles.label}>Avg. Heart Rate</Text>
               <TextInput style={styles.input} editable={false} value="57 bpm" />
             </View>
-            {/* <View style={styles.resultRow}>
-              <Text style={styles.label}>Breathing Rate</Text>
-              <TextInput
-                style={styles.input}
-                editable={false}
-                value="14 breaths per minute"
-              />
-            </View> */}
             <View style={styles.resultRow}>
               <Text style={styles.label}>Awakenings</Text>
               <TextInput style={styles.input} editable={false} value="2" />
@@ -146,11 +140,12 @@ export default function Sleep({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#f8f8f8",
     display: "flex",
     //justifyContent: "space-between",
     alignItems: "center",
     flex: 1,
+    width: "100%",
   },
 
   Main: {
@@ -160,6 +155,7 @@ const styles = StyleSheet.create({
     flex: 1,
     //justifyContent: "space-between",
     height: height * (670 / 851),
+    width: "100%",
   },
 
   InnerNav: {
@@ -167,13 +163,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     height: height * (74 / 851),
-    width: width,
+    width: "100%",
     marginBottom: 20,
     // flex:2
     // paddingBottom:height*(595/851)
   },
   SelectedInnerNavBtn: {
-    width: width / 2,
+    width: "50%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -188,7 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D6001C",
   },
   InnerNavBtn: {
-    width: width / 2,
+    width: "50%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -213,75 +209,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
   },
-
-  Content: {
-    display: "flex",
-    //justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: height * (60 / 851),
-    height: height * (450 / 851),
-    width: width,
-    flex: 3,
-  },
-
-  ContentBox: {
-    display: "flex",
-    flexDirection: "row",
-    //justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#F2F4FB",
-    width: width * (358 / 396),
-    height: height * (38 / 851),
-    marginBottom: height * (30 / 851),
-    borderColor: "black",
-    borderWidth: 1,
-  },
-
-  Buttons: {
-    // backgroundColor:'yellow',
-    paddingLeft: 50,
-    paddingRight: 80,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    // marginRight:100
-  },
-
-  play: {
-    display: "flex",
-    alignItems: "center",
-    borderRightColor: "black",
-    borderRightWidth: 1,
-    marginRight: 22,
-    // height:height*(38/851)
-  },
-
-  edit: {
-    marginLeft: 22,
-    marginRight: 35,
-  },
-  dateHeader: {
-    fontSize: 24,
-    textAlign: "center",
-    marginBottom: 20,
-    fontWeight: "bold",
-    color: "#6200ea",
-  },
-  selectedDateText: {
-    fontSize: 18,
-    textAlign: "center",
-    marginTop: 20,
-    color: "#333",
-  },
-  dateSection: {
-    backgroundColor: "white",
-    display: "flex",
-    alignItems: "center",
-    flex: 1,
-    height: "20%",
-  },
-
   dateNav: {
     flexDirection: "row",
     justifyContent: "center",
@@ -291,6 +218,11 @@ const styles = StyleSheet.create({
   },
   dateNavText: {
     fontSize: 24,
+    fontWeight: "bold",
+    marginHorizontal: 20,
+  },
+  watchText: {
+    fontSize: 12,
     fontWeight: "bold",
     marginHorizontal: 20,
   },
@@ -310,13 +242,13 @@ const styles = StyleSheet.create({
   },
   resultsContainer: {
     padding: 10,
-    backgroundColor: "#F2F4FB",
-    borderRadius: 8,
+    backgroundColor: "#fff",
+    borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    width: "100%",
+    maxWidth: "100%",
   },
   resultRow: {
     flexDirection: "row",
@@ -346,12 +278,12 @@ const styles = StyleSheet.create({
   },
   secondContainer: {
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#f8f8f8",
     alignItems: "center",
     width: "100%",
   },
   watchButton: {
     position: "absolute",
-    left: 350,
+    right: "5%",
   },
 });
