@@ -1,164 +1,189 @@
-import {View,Text,StyleSheet, TouchableOpacity,Dimensions, ScrollView} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView, TextInput } from 'react-native';
 import NavBar from './NavBar';
 import Header from './Header';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../RootStackParamList';
-
 
 import BackButton from '../assets/CurrentWorkOutAssests/BackButton.svg';
 import AddButton from '../assets/CurrentWorkOutAssests/Add.svg';
 import RemoveButton from '../assets/CurrentWorkOutAssests/Minus.svg';
 import SaveButton from '../assets/CurrentWorkOutAssests/Save.svg';
+import { useNavigation } from 'expo-router';
 
-type Props= NativeStackScreenProps<RootStackParamList,'CurrentWorkoutPageEdit'> 
+import { getCurrentData, getCurrentID } from './WorkoutSessionData';
+import { useState } from 'react';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'CurrentWorkoutPageEdit'>;
 const { height, width } = Dimensions.get('window');
 
+export default function CurrentWorkoutPageEdit({ navigation }: Props) {
+  const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-export default function CurrentWorkoutPageEdit({navigation}:Props){
+  const [data, setData] = useState(
+    getCurrentData()
+      .filter((item) => item.TemplateID === getCurrentID())
+      .map((item) => item.TemplateData)
+      .flat()
+  );
 
+  const otherData = getCurrentData()
+    .filter((item) => item.TemplateID === getCurrentID())
+    .map((item) => item.TemplateSets)
+    .flat();
 
-    const data = [
-        { id: 1, name: 'Tricep pushdowns' },
-        { id: 2, name: 'Skull crushers' },
-        { id: 3, name: 'Major Bruh Alert' },
-    ];
+  const AddExcercise = () => {
+    const currentHighestID = data[data.length - 1]?.DataId || 0;
+    setData([...data, { DataId: currentHighestID + 1, DataName: 'New Exercise' }]);
+  };
 
-    return(
-        <View style={styles.container}>
+  const RemoveExcercise = () => {
+    setData((prevData) => prevData.slice(0, -1));
+  };
 
-            <Header/>
+  // Function to update set, rep, or weight
+  const handleUpdateInfo = (dataId: number, field: string, value: string) => {
+    setData((prevData) =>
+      prevData.map((d) => {
+        if (d?.DataId === dataId) {
+          const updatedSets = otherData.map((info) =>
+            info?.ExcerciseId === dataId
+              ? { ...info, [field]: value } // Dynamically update field
+              : info
+          );
+          return { ...d, TemplateSets: updatedSets };
+        }
+        return d;
+      })
+    );
+  };
 
-            <View style ={styles.Header}>
-                
-                <TouchableOpacity>
-                    <BackButton/>
-                </TouchableOpacity>
+  return (
+    <View style={styles.container}>
+      <Header />
+      <View style={styles.Header}>
+        <TouchableOpacity onPress={() => navigationTool.navigate('Home')}>
+          <BackButton />
+        </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <RemoveButton/>
-                </TouchableOpacity>
+        <TouchableOpacity onPress={() => RemoveExcercise()}>
+          <RemoveButton />
+        </TouchableOpacity>
 
+        <TouchableOpacity onPress={() => AddExcercise()}>
+          <AddButton />
+        </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <AddButton/>
-                </TouchableOpacity>
+        <TouchableOpacity>
+          <SaveButton />
+        </TouchableOpacity>
+      </View>
 
+      <View style={styles.Content}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {data.map((item) => (
+            <View key={item?.DataId} style={styles.Boxes}>
+              <TextInput
+                style={styles.input}
+                value={item?.DataName}
+                onChangeText={(text) => {
+                  setData((prevData) =>
+                    prevData.map((d) => (d?.DataId === item?.DataId ? { ...d, DataName: text } : d))
+                  );
+                }}
+              />
 
-                <TouchableOpacity>
-                    <SaveButton/>
-                </TouchableOpacity>
+              {otherData
+                .filter((info) => info?.ExcerciseId === item?.DataId)
+                .map((info) => (
+                  <View key={info?.id} style={styles.Info}>
+                    <Text>Sets:</Text>
+                    <TextInput
+                      style={styles.input}
+                      value={String(info?.set)} // Ensure it is a string
+                      onChangeText={(text) => handleUpdateInfo(item?.DataId, 'set', text)}
+                      keyboardType="numeric"
+                    />
 
+                    <Text>Reps:</Text>
+                    <TextInput
+                      style={styles.input}
+                      value={String(info?.reps)} // Ensure it is a string
+                      onChangeText={(text) => handleUpdateInfo(item?.DataId, 'reps', text)}
+                      keyboardType="numeric"
+                    />
 
+                    <Text>Weight:</Text>
+                    <TextInput
+                      style={styles.input}
+                      value={String(info?.weight)} // Ensure it is a string
+                      onChangeText={(text) => handleUpdateInfo(item?.DataId, 'weight', text)}
+                      keyboardType="numeric"
+                    />
+                  </View>
+                ))}
             </View>
+          ))}
+        </ScrollView>
+      </View>
 
-            <View style={styles.Content}>
-
-                <ScrollView>
-
-                    {
-                        data.map((item)=>(
-                            <View key={item.id} style={styles.Boxes}>
-                                <Text>
-                                    {item.name} {item.id}
-                                </Text>
-                                <Text>
-                                    Set
-                                </Text>
-
-                                <Text>
-                                    Rep
-                                </Text>
-
-                                <Text>
-                                    Weight
-                                </Text>
-
-
-
-
-
-
-
-                            </View>
-                        ))
-                    }
-
-
-
-
-
-
-
-
-
-
-
-                </ScrollView>
-
-
-
-
-
-
-            </View>
-
-
-
-
-
-
-
-            <NavBar/>
-
-
-        </View>
-    )
-
-
+      <NavBar />
+    </View>
+  );
 }
 
-
-
 const styles = StyleSheet.create({
-    container:{
-        display:'flex',
-        flex:1,
-        justifyContent:'space-between'
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f8f8',
+  },
 
-    Header:{
-        flex:1,
-        marginTop:20,
-        display:'flex',
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'space-between',
-        width:width,
-    },
+  Header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: width * 0.06,
+    marginTop: 20,
+  },
 
-    Content:{
-        // backgroundColor:'yellow',
-        marginBottom:95,
-        flex:6,
-        display:'flex',
-        width:width,
-        justifyContent:'flex-start',
-        alignItems:'center',
-        marginTop:50,
-    },
+  Content: {
+    flex: 1,
+    marginBottom: 95,
+    marginTop: 20,
+    paddingHorizontal: width * 0.06, // Ensures no overflow
+  },
 
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 10, // Prevents cut-off of last elements
+  },
 
-    Boxes:{
-        backgroundColor:'#F2F4FB',
-        marginBottom:height*(30/851),
-        width:width*(314/393),
-        height:height*(220/851),
-        borderRadius:15,
-        display:'flex',
-        justifyContent:'space-between',
-        alignItems:'center'
-    },
+  Boxes: {
+    backgroundColor: '#fff',
+    marginBottom: 20,
+    borderRadius: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
 
+  Info: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    width: '100%',
+    marginVertical: 10,
+  },
 
-
-})
+  input: {
+    height: 40,
+    width: '100%', // Make sure it takes full width
+    marginVertical: 8,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#ccc',
+    fontSize: 16,
+  },
+});
