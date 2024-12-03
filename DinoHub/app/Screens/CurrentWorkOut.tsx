@@ -50,7 +50,7 @@ export default function CurrentWorkOut({ navigation }: Props) {
         </View>
 
         <View style={styles.Content}>
-          <ScrollView>
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
             {getCurrentData().map((item) => (
               <View style={styles.ContentBox} key={item.TemplateID}>
                 <Text>{item.NameTemplate}</Text>
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     justifyContent: 'space-between',
+    alignItems: "center",
     height: height * (670 / 851),
   },
 
@@ -140,20 +141,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: height * (60 / 851),
     height: height * (450 / 851),
-
+    marginHorizontal: "auto"
   },
 
+  scrollViewContent: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  
   ContentBox: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#F2F4FB',
-    width: '90%',
-    height: height * (38 / 851),
-    marginBottom: height * (30 / 851),
-    borderColor: 'black',
-    borderWidth: 1,
+    backgroundColor: '#fff',
+    width: width * 0.9,
+    marginRight: 10, 
+    height: height * (50 / 851),
+    marginHorizontal: 5,
+    marginBottom: 15,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 5,
   },
 
   Buttons: {
@@ -167,7 +179,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     borderRightColor: 'black',
-    borderRightWidth: 1,
     marginRight: 22,
   },
 
