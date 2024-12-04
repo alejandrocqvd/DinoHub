@@ -13,4 +13,6 @@ export type RootStackParamList = {
   EditHistorical: undefined;
   SleepTrends: undefined;
   ActiveLivingResources: undefined;
+  Init:undefined;
+  Profile:undefined;
 };

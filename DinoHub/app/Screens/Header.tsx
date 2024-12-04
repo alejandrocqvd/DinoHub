@@ -1,10 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 import Profile from '../assets/ProfilePic.svg';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../RootStackParamList';
 
 const { height, width } = Dimensions.get('window');
 
 export default function Header() {
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
     return (
         <SafeAreaView>
             <View style={styles.container}>
@@ -12,7 +17,7 @@ export default function Header() {
                     DinoHub
                 </Text>
 
-                <TouchableOpacity style={styles.touchable}>
+                <TouchableOpacity onPress={()=>navigation.navigate('Profile')} style={styles.touchable}>
                     <Profile/>
                 </TouchableOpacity>
             </View>
