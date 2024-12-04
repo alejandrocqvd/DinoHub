@@ -78,6 +78,8 @@ export default function History({ navigation }: Props) {
             markedDates={{
               [selectedDate]: { selected: true, selectedColor: '#D6001C' },
             }}
+            maxDate={new Date().toISOString().split('T')[0]} // Restricts future dates
+
           />
         </View>
 
