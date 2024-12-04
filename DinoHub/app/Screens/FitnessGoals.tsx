@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 20,
-    marginTop: 50,
+    marginTop: 10,
   },
   backButton: {
     color: "#007AFF",

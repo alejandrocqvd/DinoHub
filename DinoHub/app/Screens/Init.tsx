@@ -15,14 +15,14 @@ export default function Init({ navigation }: Props) {
       <View>
         <TouchableOpacity 
           style={styles.SignUp} 
-        //   onPress={() => navigation.navigate('SignUp')}  // Replace 'SignUp' with your screen name
+          onPress={() => navigation.navigate('SignUp')}  // Replace 'SignUp' with your screen name
         >
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
           style={styles.button} 
-        //   onPress={() => navigation.navigate('LogIn')}  // Replace 'LogIn' with your screen name
+          onPress={() => navigation.navigate('Login')}  // Replace 'LogIn' with your screen name
         >
           <Text style={styles.buttonTextO}>Log In</Text>
         </TouchableOpacity>

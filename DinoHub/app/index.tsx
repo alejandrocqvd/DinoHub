@@ -18,6 +18,8 @@ import FitnessGoals from "./Screens/FitnessGoals";
 import Init from "./Screens/Init";
 import Profile from "./Screens/Profile";
 import SyncedWatchPage from "./Screens/SyncedWatchPage";
+import Login from "./Screens/Login";
+import SignUp from "./Screens/SignUp";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -29,7 +31,7 @@ export default function App() {
         headerShown: false,
       }}
     >
-      {/* <Stack.Screen name="Init" component={Init} /> */}
+      <Stack.Screen name="Init" component={Init} />
       <Stack.Screen name="Home" component={CurrentWorkOut} />
       <Stack.Screen name="Nutrition" component={Nutrition} />
       <Stack.Screen name="CurrentWorkoutPage" component={CurrentWorkoutPage} />
@@ -52,6 +54,8 @@ export default function App() {
       <Stack.Screen name="FitnessGoals" component={FitnessGoals} />
       <Stack.Screen name="Profile" component={Profile}/>
       <Stack.Screen name="SyncedWatchPage" component={SyncedWatchPage} />
+      <Stack.Screen name="Login" component={Login}/>
+      <Stack.Screen name="SignUp" component={SignUp}/>
     </Stack.Navigator>
   );
 }

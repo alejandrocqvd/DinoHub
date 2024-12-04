@@ -53,7 +53,7 @@ export default function Profile({ navigation }: Props) {
         </TouchableOpacity>
 
         {/* Save Profile */}
-        <TouchableOpacity style={styles.SaveProfileBtn}>
+        <TouchableOpacity onPress={()=> navigation.goBack()}style={styles.SaveProfileBtn}>
           <Text style={{ color: "white", textAlign: "center", padding: 10 }}>Save Profile</Text>
         </TouchableOpacity>
       </View>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
-    marginTop: 50,
+    // marginTop: 50,
   },
   HeaderText: {
     color: "white",
