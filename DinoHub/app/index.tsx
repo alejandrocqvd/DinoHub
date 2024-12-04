@@ -49,10 +49,6 @@ export default function App() {
       <Stack.Screen name="SleepTrends" component={SleepTrends} />
       <Stack.Screen name="ActiveLivingResources" component={ActiveLivingResources} />
       <Stack.Screen name="Profile" component={Profile}/>
-      <Stack.Screen
-        name="ActiveLivingResources"
-        component={ActiveLivingResources}
-      />
       <Stack.Screen name="SyncedWatchPage" component={SyncedWatchPage} />
     </Stack.Navigator>
   );
