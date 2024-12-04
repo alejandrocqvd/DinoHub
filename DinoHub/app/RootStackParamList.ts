@@ -12,4 +12,5 @@ export type RootStackParamList = {
   Sleep: undefined;
   EditHistorical: undefined;
   SleepTrends: undefined;
+  ActiveLivingResources: undefined;
 };

@@ -13,6 +13,7 @@ import FoodEditInfo from "./Screens/FoodEditInfo";
 import Sleep from "./Screens/Sleep";
 import EditHistorical from "./Screens/EditHistorical";
 import SleepTrends from "./Screens/SleepTrends";
+import ActiveLivingResources from "./Screens/ActiveLivingResources";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -42,6 +43,7 @@ export default function App() {
       <Stack.Screen name="Sleep" component={Sleep} />
       <Stack.Screen name="EditHistorical" component={EditHistorical} />
       <Stack.Screen name="SleepTrends" component={SleepTrends} />
+      <Stack.Screen name="ActiveLivingResources" component={ActiveLivingResources} />
     </Stack.Navigator>
   );
 }
