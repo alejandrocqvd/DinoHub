@@ -12,6 +12,8 @@ import AddButton from '../assets/CurrentWorkOutAssests/Add.svg';
 import RemoveButton from '../assets/CurrentWorkOutAssests/Minus.svg';
 import SaveButton from '../assets/CurrentWorkOutAssests/Save.svg';
 
+import { addTemplate, TemplateData } from './WorkoutSessionData';
+
 const { height, width } = Dimensions.get('window');
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CurrentWorkoutPageAdd'>;
@@ -19,12 +21,12 @@ type Props = NativeStackScreenProps<RootStackParamList, 'CurrentWorkoutPageAdd'>
 export default function CurrentWorkOutAdd({ navigation }: Props) {
   const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const [exercises, setExercises] = useState<{ id: number; name: string }[]>([]);
+  const [exercises, setExercises] = useState<TemplateData[]>([]);
 
   const addExercise = () => {
     const newExercise = {
-      id: exercises.length + 1,
-      name: `Exercise ${exercises.length + 1}`,
+      DataID: exercises.length + 1,
+      DataName: `Exercise ${exercises.length + 1}`,
     };
     setExercises([...exercises, newExercise]);
   };
@@ -36,10 +38,20 @@ export default function CurrentWorkOutAdd({ navigation }: Props) {
   const handleUpdateExerciseName = (id: number, name: string) => {
     setExercises((prevExercises) =>
       prevExercises.map((exercise) =>
-        exercise.id === id ? { ...exercise, name } : exercise
+        exercise.DataId === id ? { ...exercise, name } : exercise
       )
     );
   };
+
+
+
+
+
+
+
+
+
+
 
   return (
     <View style={styles.container}>
@@ -57,7 +69,11 @@ export default function CurrentWorkOutAdd({ navigation }: Props) {
           <AddButton />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigationTool.navigate('Home')}>
+        <TouchableOpacity onPress={() => {
+            navigationTool.navigate('Home')
+            addTemplate();
+            
+            }}>
           <SaveButton />
         </TouchableOpacity>
       </View>
@@ -65,11 +81,11 @@ export default function CurrentWorkOutAdd({ navigation }: Props) {
       <View style={styles.Content}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           {exercises.map((exercise) => (
-            <View key={exercise.id} style={styles.exerciseBox}>
+            <View key={exercise.DataId} style={styles.exerciseBox}>
               <TextInput
                 style={styles.input}
-                value={exercise.name}
-                onChangeText={(text) => handleUpdateExerciseName(exercise.id, text)}
+                value={exercise.DataName}
+                onChangeText={(text) => handleUpdateExerciseName(exercise.DataId, text)}
               />
             </View>
           ))}

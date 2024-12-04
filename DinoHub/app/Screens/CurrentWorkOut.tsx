@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavBar from './NavBar';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { getCurrentData, setCurrentId, addTemplate } from './WorkoutSessionData';
+import { getCurrentData, setCurrentId, addTemplate, removeTemplate } from './WorkoutSessionData';
 
 import AddButton from '../assets/CurrentWorkOutAssests/AddButton.svg';
 import Play from '../assets/CurrentWorkOutAssests/Play.svg';
@@ -41,10 +41,13 @@ export default function CurrentWorkOut({ navigation }: Props) {
     setShowModal(true);
   };
 
+
+
   // Function to confirm deletion
   const confirmDelete = () => {
     if (deleteId !== null) {
-      setTemplates((prevTemplates) => prevTemplates.filter((template) => template.id !== deleteId));
+      // setTemplates((prevTemplates) => prevTemplates.filter((template) => template.id !== deleteId));
+      removeTemplate(deleteId);
       setShowModal(false);
       setDeleteId(null);
     }
@@ -74,7 +77,6 @@ export default function CurrentWorkOut({ navigation }: Props) {
           <TouchableOpacity
             onPress={() => {
               navigationTool.navigate('CurrentWorkoutPageAdd');
-              addTemplate();
             }}
             style={styles.NewWorkoutBtnBox}
           >
@@ -84,15 +86,15 @@ export default function CurrentWorkOut({ navigation }: Props) {
 
         <View style={styles.Content}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            {templates.map((item) => (
-              <View style={styles.ContentBox} key={item.id}>
-                <Text>{item.name}</Text>
+            {getCurrentData().map((item) => (
+              <View style={styles.ContentBox} key={item.TemplateID}>
+                <Text>{item.NameTemplate}</Text>
                 <View style={styles.Buttons}>
                   <TouchableOpacity
                     style={styles.play}
                     onPress={() => {
                       navigationTool.navigate('CurrentWorkoutPage');
-                      const value: number = item.id;
+                      const value: number = item.TemplateID;
                       setCurrentId(value);
                     }}
                   >
@@ -102,7 +104,7 @@ export default function CurrentWorkOut({ navigation }: Props) {
                     style={styles.edit}
                     onPress={() => {
                       navigationTool.navigate('CurrentWorkoutPageEdit');
-                      const value: number = item.id;
+                      const value: number = item.TemplateID;
                       setCurrentId(value);
                     }}
                   >
@@ -110,7 +112,7 @@ export default function CurrentWorkOut({ navigation }: Props) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.deleteButton}
-                    onPress={() => onDelete(item.id)}
+                    onPress={() => onDelete(item.TemplateID)}
                   >
                     <Text style={styles.deleteText}>X</Text>
                   </TouchableOpacity>

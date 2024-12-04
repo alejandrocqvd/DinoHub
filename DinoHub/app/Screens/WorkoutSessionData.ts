@@ -1,3 +1,4 @@
+import { template } from "@babel/core";
 import { useState } from "react";
 
 
@@ -7,7 +8,7 @@ export interface TemplateData {
     DataName?:string;
 }
 
-interface TemplateSets {
+export interface TemplateSets {
     ExcerciseId: number;
     id: number;
     set: number;
@@ -195,13 +196,35 @@ export const addToTemplate = (
 
   };
 
-export const addTemplate = ():void =>{
+export const addTemplate = (
+    // nameTemplate:string,
+    // templateData: TemplateData[],
+    // templateSets: TemplateSets[]
 
-    const last_element = currentData[currentData.length-1].TemplateID;
-    setCurrentId(last_element+1)
 
+):void =>{
 
+    console.log("We are in add template")
+    const max_id = Math.max(...currentData.map((item) => item.TemplateID || 0));
+    setCurrentId(max_id+1)
+
+    console.log(max_id);
 
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+export const removeTemplate = (templateID: number): void => {
+    currentData = currentData.filter((template) => template.TemplateID !== templateID);
+};
