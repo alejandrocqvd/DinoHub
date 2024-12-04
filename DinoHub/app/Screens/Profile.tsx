@@ -7,6 +7,7 @@ import Back from "../assets/ProfileAssets/arrow_back.svg";
 import Avatar from "../assets/ProfileAssets/Generic avatar (1).svg";
 
 import { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
 
@@ -14,7 +15,7 @@ export default function Profile({ navigation }: Props) {
   const [drop, setDrop] = useState<string>("BodyBuilding");
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.Header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -64,7 +65,7 @@ export default function Profile({ navigation }: Props) {
           <Text style={{ color: "red", textAlign: "center", marginTop: 20 }}>Delete Account</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 30,
     flex: 1,
   },
   Avatar: {
