@@ -1,13 +1,14 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-const { width } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
 
 export default function FitnessGoals({ navigation }: { navigation: any }) {
   const progress = 0.722; // Example: 72.2% progress
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -52,7 +53,7 @@ export default function FitnessGoals({ navigation }: { navigation: any }) {
           placeholderTextColor="#999"
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
