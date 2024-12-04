@@ -11,6 +11,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
+  Linking,
 } from 'react-native';
 import Header from './Header';
 import NavBar from './NavBar';
@@ -28,6 +29,14 @@ export default function MyComponent() {
     'Resource 6',
     'Resource 7',
   ];
+
+  const handleResourcePress = () => {
+    // Open the URL when the resource is pressed
+    const url = 'https://active-living.ucalgary.ca/';
+    Linking.openURL(url).catch((err) =>
+      console.error('Failed to open URL:', err)
+    );
+  };
 
   return (
     <KeyboardAvoidingView
@@ -58,7 +67,6 @@ export default function MyComponent() {
               </TouchableOpacity>
             </View>
 
-
             {/* Resource Links */}
             <ScrollView style={styles.resourcesList}>
               {resources
@@ -66,7 +74,11 @@ export default function MyComponent() {
                   resource.toLowerCase().includes(searchText.toLowerCase())
                 )
                 .map((resource, index) => (
-                  <TouchableOpacity key={index} style={styles.resourceItem}>
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.resourceItem}
+                    onPress={handleResourcePress} // Open the URL on press
+                  >
                     <Text style={styles.resourceText}>{resource}</Text>
                     <Text style={styles.arrow}>➡️</Text>
                   </TouchableOpacity>
@@ -85,7 +97,7 @@ export default function MyComponent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8f8f8',
   },
   innerContainer: {
     flex: 1,
@@ -108,14 +120,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 20,
     paddingHorizontal: 10,
-    color: "#333",
-    backgroundColor: '#f9f9f9',
+    color: '#333',
+    backgroundColor: '#fff',
   },
   searchInput: {
     flex: 1,
     height: 40,
     fontSize: 16,
-    color: "#333",
+    color: '#333',
   },
   clearButton: {
     marginLeft: 10,
@@ -131,12 +143,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#fff',
     padding: 15,
     marginBottom: 10,
     borderRadius: 5,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 5,
     elevation: 2,
   },
