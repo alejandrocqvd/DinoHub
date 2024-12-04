@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -16,18 +16,17 @@ import {
 import Header from './Header';
 import NavBar from './NavBar';
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 export default function MyComponent() {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const resources = [
-    'Resource 1',
-    'Resource 2',
-    'Resource 3',
-    'Resource 4',
-    'Resource 5',
-    'Resource 6',
-    'Resource 7',
+    "Squash Courts",
+    "Ice Skating Rink",
+    "Climbing Wall",
+    "Gym",
+    "Aquatic Centre",
+    "Mental Health Resources",
   ];
 
   const handleResourcePress = () => {
@@ -41,7 +40,7 @@ export default function MyComponent() {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.innerContainer}>
@@ -62,7 +61,10 @@ export default function MyComponent() {
                 value={searchText}
                 onChangeText={(text) => setSearchText(text)}
               />
-              <TouchableOpacity onPress={() => setSearchText('')} style={styles.clearButton}>
+              <TouchableOpacity
+                onPress={() => setSearchText("")}
+                style={styles.clearButton}
+              >
                 <Text style={styles.clearButtonText}>✖</Text>
               </TouchableOpacity>
             </View>
@@ -108,15 +110,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     marginBottom: 20,
     paddingHorizontal: 10,
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
   },
   clearButtonText: {
     fontSize: 18,
-    color: '#333',
+    color: "#333",
   },
   resourcesList: {
     flex: 1,
@@ -154,10 +156,10 @@ const styles = StyleSheet.create({
   },
   resourceText: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   arrow: {
     fontSize: 18,
-    color: '#d32f2f',
+    color: "#d32f2f",
   },
 });

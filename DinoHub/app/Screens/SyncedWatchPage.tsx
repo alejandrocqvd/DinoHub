@@ -93,14 +93,14 @@ const styles = StyleSheet.create({
     maxWidth: "50%",
   },
   secondContainer: {
-    marginTop: 100,
+    marginTop: 80,
     padding: 20,
     backgroundColor: "#f8f8f8",
     alignItems: "center",
     width: "100%",
   },
   content: {
-    padding: 50,
+    padding: 20,
     fontWeight: "bold",
   },
   watchButton: {
