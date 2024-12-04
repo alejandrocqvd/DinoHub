@@ -145,7 +145,7 @@ let currentData: CurrentData[]=[
 
     {
         TemplateID:7,
-        NameTemplate:"Weird Template",
+        NameTemplate:"Custom Full Body",
         TemplateData:[
             {DataId:1,DataName:'Bench press'},
             {DataId:2,DataName:'Lat pull downs'},

@@ -1,21 +1,22 @@
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView, TextInput, Modal } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../RootStackParamList';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useState, useEffect } from 'react';
 import { getCurrentID, getCurrentData } from './WorkoutSessionData';
 import Header from './Header';
 import NavBar from './NavBar';
-import BackButton from '../assets/CurrentWorkOutAssests/BackButton.svg';
-import DoneButton from '../assets/CurrentWorkOutAssests/DoneButton.svg';
 import { Ionicons } from "@expo/vector-icons";
+import DoneButton from '../assets/CurrentWorkOutAssests/DoneButton.svg';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CurrentWorkoutPage'>;
 const { height, width } = Dimensions.get('window');
 
 export default function CurrentWorkoutPage({ navigation }: Props) {
   const [sets, setSets] = useState<any[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [isWorkoutFinished, setIsWorkoutFinished] = useState(false);
 
   useEffect(() => {
     const filteredSets = getCurrentData()
@@ -44,6 +45,23 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
     ]);
   };
 
+  // Handle finishing the workout
+  const finishWorkout = () => {
+    setIsWorkoutFinished(true);
+    setShowModal(true);
+  };
+
+  // Confirm the workout finish
+  const confirmFinish = () => {
+    setShowModal(false);
+    navigationTool.navigate("Home");
+  };
+
+  // Cancel finishing the workout
+  const cancelFinish = () => {
+    setShowModal(false);
+  };
+
   return (
     <View style={styles.container}>
       <Header />
@@ -55,9 +73,9 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
           {template?.NameTemplate}
         </Text>
       </View>
-      
+
       <View style={styles.finishContainer}>
-        <TouchableOpacity onPress={() => navigationTool.navigate("Home")} style={styles.finishButton}>
+        <TouchableOpacity onPress={finishWorkout} style={styles.finishButton}>
           <DoneButton width={30} height={30} />
           <Text style={styles.finishText}>Finish Workout</Text>
         </TouchableOpacity>
@@ -125,7 +143,29 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
           ))}
         </ScrollView>
       </View>
+
       <NavBar />
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModal}
+        onRequestClose={cancelFinish}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalText}>Are you sure you want to finish this workout?</Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity onPress={confirmFinish} style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>Yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={cancelFinish} style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>No</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -219,5 +259,39 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    width: width * 0.8,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  modalButton: {
+    backgroundColor: '#D6001C',
+    padding: 10,
+    borderRadius: 5,
+    width: '48%',
+    alignItems: 'center',
+  },
+  modalButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });

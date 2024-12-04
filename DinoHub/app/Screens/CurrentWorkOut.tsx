@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView, Modal } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../RootStackParamList';
 import Header from './Header';
@@ -22,18 +22,38 @@ export default function CurrentWorkOut({ navigation }: Props) {
 
   // State to hold workout data
   const [templates, setTemplates] = useState([
-    { id: 1, name: 'Temp Template 1' },
-    { id: 2, name: 'Temp Template 2' },
-    { id: 3, name: 'Temp Template 3' },
-    { id: 4, name: 'Temp Template 4' },
-    { id: 5, name: 'Temp Template 5' },
-    { id: 6, name: 'Temp Template 6' },
-    { id: 7, name: 'Temp Template 7' },
+    { id: 1, name: 'Push Day' },
+    { id: 2, name: 'Pull Day' },
+    { id: 3, name: 'Leg Day' },
+    { id: 4, name: 'Push Day Default Template' },
+    { id: 5, name: 'Pull Day Default Template' },
+    { id: 6, name: 'Leg Day Default Template' },
+    { id: 7, name: 'Custom Full Body' },
   ]);
+
+  // State for the confirmation modal
+  const [showModal, setShowModal] = useState(false);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
 
   // Function to delete a workout by its id
   const onDelete = (id: number) => {
-    setTemplates((prevTemplates) => prevTemplates.filter((template) => template.id !== id));
+    setDeleteId(id);
+    setShowModal(true);
+  };
+
+  // Function to confirm deletion
+  const confirmDelete = () => {
+    if (deleteId !== null) {
+      setTemplates((prevTemplates) => prevTemplates.filter((template) => template.id !== deleteId));
+      setShowModal(false);
+      setDeleteId(null);
+    }
+  };
+
+  // Function to cancel deletion
+  const cancelDelete = () => {
+    setShowModal(false);
+    setDeleteId(null);
   };
 
   return (
@@ -100,7 +120,29 @@ export default function CurrentWorkOut({ navigation }: Props) {
           </ScrollView>
         </View>
       </View>
+
       <NavBar />
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModal}
+        onRequestClose={cancelDelete}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalText}>Are you sure you want to delete this template?</Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity onPress={confirmDelete} style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>Yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={cancelDelete} style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>No</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -204,6 +246,7 @@ const styles = StyleSheet.create({
     marginLeft: 22,
     marginRight: 35,
   },
+
   deleteButton: {
     padding: 5,
     width: 30,
@@ -211,10 +254,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#D6001C",
     borderRadius: 5,
   },
+
   deleteText: {
     color: "#fff",
     fontWeight: "bold",
   },
+
   NewWorkoutBtnBox: {
     display: 'flex',
     flexDirection: 'row',
@@ -232,5 +277,45 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     marginLeft: 10,
+  },
+
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+
+  modalContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    width: width * 0.8,
+    alignItems: 'center',
+  },
+
+  modalText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+
+  modalButton: {
+    backgroundColor: '#D6001C',
+    padding: 10,
+    borderRadius: 5,
+    width: '48%',
+    alignItems: 'center',
+  },
+
+  modalButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
