@@ -17,6 +17,29 @@ import React, { useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
 import DatePicker from "react-native-date-picker";
+import { BarChart, LineChart } from "react-native-gifted-charts";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import Svg, { Line } from "react-native-svg";
+
+// Register the required chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 type Props = NativeStackScreenProps<RootStackParamList, "SleepTrends">;
 const { height, width } = Dimensions.get("window");
@@ -101,48 +124,69 @@ export default function SleepTrends({ navigation }: Props) {
     }
     hideStartDatePicker();
   };
+
+  const dailySleepData = [
+    { value: 8, label: "Mon" },
+    { value: 7.5, label: "Tue" },
+    { value: 7.75, label: "Wed" },
+    { value: 8, label: "Thu" },
+    { value: 10, label: "Fri" },
+    { value: 9, label: "Sat" },
+    { value: 6, label: "Sun" },
+  ];
+
+  const dailySleepScoreData = [
+    { value: 92, label: "Mon" },
+    { value: 85, label: "Tue" },
+    { value: 87, label: "Wed" },
+    { value: 75, label: "Thu" },
+    { value: 80, label: "Fri" },
+    { value: 79, label: "Sat" },
+    { value: 60, label: "Sun" },
+  ];
+
+  const dailyHeartRateData = [
+    { value: 57, label: "Mon" },
+    { value: 50, label: "Tue" },
+    { value: 53, label: "Wed" },
+    { value: 60, label: "Thu" },
+    { value: 54, label: "Fri" },
+    { value: 48, label: "Sat" },
+    { value: 55, label: "Sun" },
+  ];
   return (
     <View style={styles.container}>
       <Header />
 
-      <View style={styles.Main}>
-        <View style={styles.InnerNav}>
-          <TouchableOpacity
-            style={styles.InnerNavBtn}
-            onPress={() => navigationTool.navigate("Sleep")}
-          >
-            <Text style={styles.InnerNavBtnText}>Data Tracker</Text>
-          </TouchableOpacity>
+      <View style={styles.InnerNav}>
+        <TouchableOpacity
+          style={styles.InnerNavBtn}
+          onPress={() => navigationTool.navigate("Sleep")}
+        >
+          <Text style={styles.InnerNavBtnText}>Data Tracker</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.SelectedInnerNavBtn}>
-            <Text style={styles.InnerNavBtnText}>Sleep Trends</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.secondContainer}>
-          <ScrollView contentContainerStyle={styles.resultsContainer}>
-            <Text style={styles.header}>Date Range Filter</Text>
-            {/* <View style={styles.resultRow}>
-              <View style={styles.resultColumn}>
-                <Text style={styles.label}>Start Date</Text>
-                <TextInput
-                  style={styles.input}
-                  editable={false}
-                  value="7h 38m"
-                />
-              </View>
-              <View style={styles.resultColumn}>
-                <Text style={styles.label}>End Date</Text>
-                <TextInput
-                  style={styles.input}
-                  editable={false}
-                  value="93/100"
-                />
-              </View>
-            </View> */}
-            <View style={styles.dateRow}>
-              {/* Start Date */}
-
+        <TouchableOpacity style={styles.SelectedInnerNavBtn}>
+          <Text style={[styles.InnerNavBtnText, { color: "white" }]}>
+            Sleep Trends
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {/* BELOW IS FOR GRAPH SELECTION PAGE IF TIME PERMITS */}
+      {/* <View style={styles.graphButton}>
+        <TouchableOpacity
+          style={styles.AddBtnBox}
+          onPress={() => navigationTool.navigate("CurrentWorkoutPageAdd")}
+        >
+          <Icon name="clock-o" size={36} color="#333" />
+        </TouchableOpacity>
+      </View> */}
+      <View style={styles.secondContainer}>
+        <View style={styles.resultsContainer}>
+          <Text style={styles.header}>Date Range Filter</Text>
+          <View style={styles.dateRow}>
+            {/* Start Date */}
+            <View style={styles.dateColumn}>
               <TouchableOpacity onPress={showStartDatePicker}>
                 <Text style={styles.dateLabel}>Start Date</Text>
                 <Text style={styles.dateNavTitle}>
@@ -156,7 +200,9 @@ export default function SleepTrends({ navigation }: Props) {
                 onCancel={hideStartDatePicker}
                 date={startDate}
               />
-              {/* End Date */}
+            </View>
+            {/* End Date */}
+            <View style={styles.dateColumn}>
               <TouchableOpacity onPress={showEndDatePicker}>
                 <Text style={styles.dateLabel}>End Date</Text>
                 <Text style={styles.dateNavTitle}>
@@ -171,10 +217,41 @@ export default function SleepTrends({ navigation }: Props) {
                 date={endDate}
               />
             </View>
-          </ScrollView>
+          </View>
         </View>
       </View>
-
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.scrollableField}>
+          <View style={styles.singleGraph}>
+            <View style={styles.graph}>
+              <BarChart
+                data={dailySleepData}
+                maxValue={12}
+                frontColor={"#D6001C"}
+              />
+              <Text style={styles.graphTitle}>
+                {"Average Sleep Duration Per Day"}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.singleGraph}>
+            <View style={styles.graph}>
+              <BarChart data={dailySleepScoreData} frontColor={"#D6001C"} />
+              <Text style={styles.graphTitle}>
+                {"Average Sleep Score Per Day"}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.singleGraph}>
+            <View style={styles.graph}>
+              <BarChart data={dailyHeartRateData} frontColor={"#D6001C"} />
+              <Text style={styles.graphTitle}>
+                {"Average Heart Rate Per Day"}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
       <NavBar />
     </View>
   );
@@ -182,7 +259,7 @@ export default function SleepTrends({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#f8f8f8",
     display: "flex",
     //justifyContent: "space-between",
     alignItems: "center",
@@ -196,7 +273,7 @@ const styles = StyleSheet.create({
     // marginTop:-116,
     flex: 1,
     //justifyContent: "space-between",
-    height: height * (670 / 851),
+    //height: height * (670 / 851),
     width: "100%",
   },
 
@@ -264,13 +341,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   dateNavTitle: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#D6001C",
     backgroundColor: "#fff",
   },
   scrollViewContent: {
-    paddingBottom: 10,
+    paddingBottom: 150,
+    width: "100%",
   },
   header: {
     fontSize: 20,
@@ -280,7 +358,7 @@ const styles = StyleSheet.create({
   },
   resultsContainer: {
     padding: 10,
-    backgroundColor: "#F2F4FB",
+    backgroundColor: "white",
     borderRadius: 8,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -309,6 +387,7 @@ const styles = StyleSheet.create({
     color: "#D6001C",
     paddingRight: 20,
     textAlign: "center",
+    padding: 20,
   },
   input: {
     backgroundColor: "#fff",
@@ -324,13 +403,9 @@ const styles = StyleSheet.create({
   },
   secondContainer: {
     padding: 20,
-    backgroundColor: "#fff",
+    paddingTop: 70,
     alignItems: "center",
     width: "100%",
-  },
-  watchButton: {
-    position: "absolute",
-    left: 350,
   },
   dateRow: {
     flexDirection: "row",
@@ -347,7 +422,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9f9f9",
   },
   dateLabel: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#555",
     marginBottom: 4,
   },
@@ -355,5 +430,32 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#000",
+  },
+  dateColumn: {
+    paddingLeft: 40,
+    paddingRight: 40,
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  graph: {
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 40,
+  },
+  graphTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#D6001C",
+    padding: 20,
+  },
+  scrollableField: {
+    minWidth: "100%",
+  },
+  singleGraph: {
+    paddingBottom: 20,
+  },
+  graphButton: {
+    position: "absolute",
+    right: "5%",
   },
 });

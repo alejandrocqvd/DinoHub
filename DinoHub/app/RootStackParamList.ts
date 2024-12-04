@@ -15,4 +15,5 @@ export type RootStackParamList = {
   ActiveLivingResources: undefined;
   Init:undefined;
   Profile:undefined;
+  SyncedWatchPage: undefined;
 };
