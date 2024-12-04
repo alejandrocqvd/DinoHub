@@ -24,14 +24,14 @@ const { height, width } = Dimensions.get("window");
 
 export default function NavBar() {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>(); // Add the correct type
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
     <SafeAreaView style={styles.navBarContainer}>
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.Buttons}
-          onPress={() => navigation.navigate("Home")} // Navigate to "Home"
+          onPress={() => navigation.navigate("Home")}
         >
           <Dumbell />
           <DumbLabel />
@@ -39,7 +39,7 @@ export default function NavBar() {
 
         <TouchableOpacity
           style={styles.Buttons}
-          onPress={() => navigation.navigate("Nutrition")} // Navigate to "Nutrition"
+          onPress={() => navigation.navigate("Nutrition")}
         >
           <Nut />
           <NutLabel />
@@ -47,7 +47,7 @@ export default function NavBar() {
 
         <TouchableOpacity
           style={styles.Buttons}
-          onPress={() => navigation.navigate("Sleep")} // Navigate to "Sleep"
+          onPress={() => navigation.navigate("Sleep")}
         >
           <Sleep />
           <SleepLabel />
@@ -55,7 +55,7 @@ export default function NavBar() {
 
         <TouchableOpacity
           style={styles.Buttons}
-          // onPress={() => navigation.navigate('Resources')} // Navigate to "Resources"
+          onPress={() => navigation.navigate('ActiveLivingResources')}
         >
           <Resources />
           <ResourcesLabel />
