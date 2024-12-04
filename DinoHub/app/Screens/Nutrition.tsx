@@ -46,8 +46,6 @@ const isToday = (date: Date): boolean => {
   );
 };
 
-// Components
-
 // MacroRow Component
 const MacroRow: React.FC<MacroRowProps> = ({ name, goal, left }) => (
   <View style={styles.macroRow}>
@@ -206,10 +204,8 @@ const Nutrition = () => {
     },
   ];
 
-  // State for meals
   const [meals, setMeals] = useState<MealType[]>(initialMeals);
 
-  // Macronutrient goals and left
   const [macros, setMacros] = useState([
     { name: "Calories", goal: 2550, left: 2550 },
     { name: "Protein", goal: 140, left: 140 },
@@ -217,7 +213,6 @@ const Nutrition = () => {
     { name: "Fats", goal: 80, left: 80 },
   ]);
 
-  // useEffect to calculate left macros whenever meals change
   useEffect(() => {
     let totalCalories = 0;
     let totalProtein = 0;
@@ -241,7 +236,6 @@ const Nutrition = () => {
     ]);
   }, [meals]);
 
-  // useEffect to clear meals if selected date is not today
   useEffect(() => {
     if (!isToday(currentDate)) {
       setMeals([
@@ -262,7 +256,6 @@ const Nutrition = () => {
         },
       ]);
 
-      // Reset macros to initial goals since no food is consumed
       setMacros([
         { name: "Calories", goal: 2550, left: 2550 },
         { name: "Protein", goal: 140, left: 140 },
@@ -282,9 +275,11 @@ const Nutrition = () => {
   };
 
   const handleNextDate = () => {
-    const nextDate = new Date(currentDate);
-    nextDate.setDate(nextDate.getDate() + 1);
-    setCurrentDate(nextDate);
+    if (!isToday(currentDate)) {
+      const nextDate = new Date(currentDate);
+      nextDate.setDate(nextDate.getDate() + 1);
+      setCurrentDate(nextDate);
+    }
   };
 
   const showDatePicker = () => {
@@ -334,8 +329,18 @@ const Nutrition = () => {
               {isToday(currentDate) ? "Today" : currentDate.toDateString()}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleNextDate}>
-            <Text style={styles.dateNavText}>{">"}</Text>
+          <TouchableOpacity
+            onPress={handleNextDate}
+            disabled={isToday(currentDate)}
+          >
+            <Text
+              style={[
+                styles.dateNavText,
+                isToday(currentDate) && { color: "#d3d3d3" },
+              ]}
+            >
+              {">"}
+            </Text>
           </TouchableOpacity>
         </View>
 

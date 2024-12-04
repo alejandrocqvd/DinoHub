@@ -48,7 +48,7 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
     <View style={styles.container}>
       <Header />
       <View style={styles.Header}>
-        <TouchableOpacity onPress={() => navigationTool.navigate("Nutrition")}>
+        <TouchableOpacity onPress={() => navigationTool.navigate("Home")}>
           <Ionicons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.currentWorkout}>
