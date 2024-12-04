@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../RootStackParamList';
@@ -6,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavBar from './NavBar';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { getCurrentData, setCurrentId,addTemplate } from './WorkoutSessionData';
+import { getCurrentData, setCurrentId, addTemplate } from './WorkoutSessionData';
 
 import AddButton from '../assets/CurrentWorkOutAssests/AddButton.svg';
 import Play from '../assets/CurrentWorkOutAssests/Play.svg';
@@ -19,7 +20,8 @@ const { height, width } = Dimensions.get('window');
 export default function CurrentWorkOut({ navigation }: Props) {
   const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const data = [
+  // State to hold workout data
+  const [templates, setTemplates] = useState([
     { id: 1, name: 'Temp Template 1' },
     { id: 2, name: 'Temp Template 2' },
     { id: 3, name: 'Temp Template 3' },
@@ -27,15 +29,20 @@ export default function CurrentWorkOut({ navigation }: Props) {
     { id: 5, name: 'Temp Template 5' },
     { id: 6, name: 'Temp Template 6' },
     { id: 7, name: 'Temp Template 7' },
-  ];
+  ]);
+
+  // Function to delete a workout by its id
+  const onDelete = (id: number) => {
+    setTemplates((prevTemplates) => prevTemplates.filter((template) => template.id !== id));
+  };
 
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.Main}>
         <View style={styles.InnerNav}>
-          <TouchableOpacity style={styles.InnerNavBtn}>
-            <Text style={styles.InnerNavBtnText}>Templates</Text>
+          <TouchableOpacity style={[styles.InnerNavBtn, { backgroundColor: '#D6001C' }]}>
+            <Text style={[styles.InnerNavBtnText, { color: 'white' }]}>Templates</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigationTool.navigate('History')} style={styles.InnerNavBtn}>
@@ -44,34 +51,28 @@ export default function CurrentWorkOut({ navigation }: Props) {
         </View>
 
         <View>
-          <TouchableOpacity onPress={() => {
-            
-            navigationTool.navigate('CurrentWorkoutPageAdd');
-            addTemplate();
-          
-          
-          
-          }
-            
-            
-            
-            
-            } style={styles.AddBtnBox}>
-            <AddButton />
+          <TouchableOpacity
+            onPress={() => {
+              navigationTool.navigate('CurrentWorkoutPageAdd');
+              addTemplate();
+            }}
+            style={styles.NewWorkoutBtnBox}
+          >
+            <Text style={styles.NewWorkoutText}>+  New Workout Template</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.Content}>
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            {getCurrentData().map((item) => (
-              <View style={styles.ContentBox} key={item.TemplateID}>
-                <Text>{item.NameTemplate}</Text>
+            {templates.map((item) => (
+              <View style={styles.ContentBox} key={item.id}>
+                <Text>{item.name}</Text>
                 <View style={styles.Buttons}>
                   <TouchableOpacity
                     style={styles.play}
                     onPress={() => {
                       navigationTool.navigate('CurrentWorkoutPage');
-                      const value: number = item.TemplateID ?? 0;
+                      const value: number = item.id;
                       setCurrentId(value);
                     }}
                   >
@@ -81,14 +82,17 @@ export default function CurrentWorkOut({ navigation }: Props) {
                     style={styles.edit}
                     onPress={() => {
                       navigationTool.navigate('CurrentWorkoutPageEdit');
-                      const value: number = item.TemplateID ?? 0;
+                      const value: number = item.id;
                       setCurrentId(value);
                     }}
                   >
                     <Edit />
                   </TouchableOpacity>
-                  <TouchableOpacity>
-                    <Remove />
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => onDelete(item.id)}
+                  >
+                    <Text style={styles.deleteText}>X</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -134,6 +138,8 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderBottomColor: 'black',
     borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderTopColor: "black",
   },
 
   InnerNavBtnText: {
@@ -197,5 +203,34 @@ const styles = StyleSheet.create({
   edit: {
     marginLeft: 22,
     marginRight: 35,
+  },
+  deleteButton: {
+    padding: 5,
+    width: 30,
+    alignItems: "center",
+    backgroundColor: "#D6001C",
+    borderRadius: 5,
+  },
+  deleteText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  NewWorkoutBtnBox: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#5A3E75',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+
+  NewWorkoutText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    marginLeft: 10,
   },
 });

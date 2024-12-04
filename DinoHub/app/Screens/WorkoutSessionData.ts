@@ -63,7 +63,10 @@ let currentData: CurrentData[]=[
             {DataId:4,DataName:'Assisted Pull ups'}
         ],
         TemplateSets:[
-
+            {ExcerciseId:1,id:1,set:0,reps:0,weight:0},
+            {ExcerciseId:2,id:2,set:0,reps:0,weight:0},
+            {ExcerciseId:3,id:3,set:0,reps:0,weight:0},
+            {ExcerciseId:4,id:4,set:0,reps:0,weight:0}
         ]
     },
 
@@ -77,7 +80,10 @@ let currentData: CurrentData[]=[
             {DataId:4,DataName:'Leg Curl'}
         ],
         TemplateSets:[
-
+            {ExcerciseId:1,id:1,set:0,reps:0,weight:0},
+            {ExcerciseId:2,id:2,set:0,reps:0,weight:0},
+            {ExcerciseId:3,id:3,set:0,reps:0,weight:0},
+            {ExcerciseId:4,id:4,set:0,reps:0,weight:0}
         ]
     },
 
@@ -92,7 +98,10 @@ let currentData: CurrentData[]=[
             {DataId:4,DataName:'Skull crushers'}
         ],
         TemplateSets:[
-
+            {ExcerciseId:1,id:1,set:0,reps:0,weight:0},
+            {ExcerciseId:2,id:2,set:0,reps:0,weight:0},
+            {ExcerciseId:3,id:3,set:0,reps:0,weight:0},
+            {ExcerciseId:4,id:4,set:0,reps:0,weight:0}
         ]
     },
 
@@ -107,7 +116,10 @@ let currentData: CurrentData[]=[
             {DataId:4,DataName:'Hammer curls'}
         ],
         TemplateSets:[
-
+            {ExcerciseId:1,id:1,set:0,reps:0,weight:0},
+            {ExcerciseId:2,id:2,set:0,reps:0,weight:0},
+            {ExcerciseId:3,id:3,set:0,reps:0,weight:0},
+            {ExcerciseId:4,id:4,set:0,reps:0,weight:0}
         ]
     },
 
@@ -123,7 +135,10 @@ let currentData: CurrentData[]=[
             {DataId:4,DataName:'Hacksquats'}
         ],
         TemplateSets:[
-
+            {ExcerciseId:1,id:1,set:0,reps:0,weight:0},
+            {ExcerciseId:2,id:2,set:0,reps:0,weight:0},
+            {ExcerciseId:3,id:3,set:0,reps:0,weight:0},
+            {ExcerciseId:4,id:4,set:0,reps:0,weight:0}
         ]
     },
 
@@ -138,7 +153,10 @@ let currentData: CurrentData[]=[
             {DataId:4,DataName:'Barbell military press'}
         ],
         TemplateSets:[
-
+            {ExcerciseId:1,id:1,set:0,reps:0,weight:0},
+            {ExcerciseId:2,id:2,set:0,reps:0,weight:0},
+            {ExcerciseId:3,id:3,set:0,reps:0,weight:0},
+            {ExcerciseId:4,id:4,set:0,reps:0,weight:0}
         ]
     },
 

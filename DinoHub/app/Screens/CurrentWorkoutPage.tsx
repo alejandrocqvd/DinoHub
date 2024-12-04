@@ -9,6 +9,7 @@ import Header from './Header';
 import NavBar from './NavBar';
 import BackButton from '../assets/CurrentWorkOutAssests/BackButton.svg';
 import DoneButton from '../assets/CurrentWorkOutAssests/DoneButton.svg';
+import { Ionicons } from "@expo/vector-icons";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CurrentWorkoutPage'>;
 const { height, width } = Dimensions.get('window');
@@ -29,6 +30,10 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
     .map((item) => item.TemplateData)
     .flat();
 
+  // Get the current template based on TemplateID
+  const template = getCurrentData()
+    .find((item) => item.TemplateID === getCurrentID());
+
   const navigationTool = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const AddASet = (exerciseId: number | undefined) => {
@@ -43,19 +48,28 @@ export default function CurrentWorkoutPage({ navigation }: Props) {
     <View style={styles.container}>
       <Header />
       <View style={styles.Header}>
-        <TouchableOpacity onPress={() => navigationTool.navigate('Home')} style={styles.backButton}>
-          <BackButton />
+        <TouchableOpacity onPress={() => navigationTool.navigate("Nutrition")}>
+          <Ionicons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.currentWorkout}>Current Workout</Text>
-        <TouchableOpacity onPress={() => navigationTool.navigate('Home')} style={styles.doneButton}>
-          <DoneButton />
+        <Text style={styles.currentWorkout}>
+          {template?.NameTemplate}
+        </Text>
+      </View>
+      
+      <View style={styles.finishContainer}>
+        <TouchableOpacity onPress={() => navigationTool.navigate("Home")} style={styles.finishButton}>
+          <DoneButton width={30} height={30} />
+          <Text style={styles.finishText}>Finish Workout</Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.Content}>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           {data.map((item) => (
             <View key={item?.DataId} style={styles.Boxes}>
-              <Text style={styles.bold}>{item?.DataId} - {item?.DataName}</Text>
+              <Text style={styles.bold}>
+                {item?.DataId} - {item?.DataName}
+              </Text>
               {sets
                 .filter((info) => info.ExcerciseId === item?.DataId)
                 .map((info) => (
@@ -126,15 +140,37 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: width * 0.06,
   },
   backButton: {
-    marginLeft: width * (23 / 396),
+    marginRight: 10,
   },
-  doneButton: {
-    marginRight: width * (23 / 396),
+  currentWorkout: {
+    fontSize: 28,
+    fontWeight: "bold",
+    flex: 1,
+    textAlign: 'center',
+    left: -13
+  },
+  finishContainer: {
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  finishButton: {
+    backgroundColor: '#5A3E75',
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  finishText: {
+    color: '#fff',
+    fontSize: 16,
+    marginLeft: 10,
   },
   Content: {
     marginBottom: 95,
@@ -143,18 +179,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: 20,
-    width: "100%"
+    width: "100%",
   },
   bold: {
     fontWeight: "bold",
     marginVertical: 10,
-  }, 
-
-
-  scrollViewContent: {
-    width: "100%"
   },
-
+  scrollViewContent: {
+    width: "100%",
+  },
   Info: {
     display: 'flex',
     flexDirection: 'row',
@@ -163,7 +196,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  
   setInfo: {
     borderWidth: 1,
     borderRadius: 5,
@@ -173,13 +205,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     margin: 5,
   },
-  
   Add: {
     marginBottom: 10,
     marginTop: 10,
     marginHorizontal: width * 0.06,
   },
-  
   Boxes: {
     backgroundColor: '#fff',
     marginBottom: height * (30 / 851),
@@ -190,8 +220,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
   },
-  currentWorkout: {
-    fontSize: 16,
-    fontWeight: "bold"
-  }
 });
