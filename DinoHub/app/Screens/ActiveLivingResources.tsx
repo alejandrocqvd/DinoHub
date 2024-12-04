@@ -1,75 +1,151 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Dimensions,
+} from 'react-native';
 import Header from './Header';
 import NavBar from './NavBar';
 
 const { height, width } = Dimensions.get('window');
 
 export default function MyComponent() {
+  const [searchText, setSearchText] = useState('');
+  const resources = [
+    'Resource 1',
+    'Resource 2',
+    'Resource 3',
+    'Resource 4',
+    'Resource 5',
+    'Resource 6',
+    'Resource 7',
+  ];
+
   return (
-    <View style={styles.container}>
-      {/* Header Section */}
-      <Header />
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.innerContainer}>
+          {/* Header Section */}
+          <Header />
 
-      {/* Main Content */}
-      <View style={styles.content}>
-        {/* Title or Description */}
-        <Text style={styles.title}>Welcome to Your App!</Text>
-        <Text style={styles.subtitle}>Your daily activities and tasks</Text>
+          {/* Main Content */}
+          <View style={styles.content}>
+            {/* Title */}
+            <Text style={styles.title}>Active Living Resources</Text>
 
-        {/* Image or Illustration */}
-        <Image source={{uri: 'https://placekitten.com/800/800'}} style={styles.image} />
+            {/* Search Bar */}
+            <View style={styles.searchBar}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search resources"
+                placeholderTextColor="#555"
+                value={searchText}
+                onChangeText={(text) => setSearchText(text)}
+              />
+              <TouchableOpacity onPress={() => setSearchText('')} style={styles.clearButton}>
+                <Text style={styles.clearButtonText}>✖</Text>
+              </TouchableOpacity>
+            </View>
 
-        {/* Action Button */}
-        <TouchableOpacity style={styles.actionButton}>
-          <Text style={styles.buttonText}>Start Now</Text>
-        </TouchableOpacity>
-      </View>
 
-      {/* Bottom Navigation Bar */}
-      <NavBar />
-    </View>
+            {/* Resource Links */}
+            <ScrollView style={styles.resourcesList}>
+              {resources
+                .filter((resource) =>
+                  resource.toLowerCase().includes(searchText.toLowerCase())
+                )
+                .map((resource, index) => (
+                  <TouchableOpacity key={index} style={styles.resourceItem}>
+                    <Text style={styles.resourceText}>{resource}</Text>
+                    <Text style={styles.arrow}>➡️</Text>
+                  </TouchableOpacity>
+                ))}
+            </ScrollView>
+          </View>
+
+          {/* Bottom Navigation Bar */}
+          <NavBar />
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5', // Background color for the whole screen
+    backgroundColor: '#f5f5f5',
+  },
+  innerContainer: {
+    flex: 1,
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: width * 0.1,
+    padding: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#777',
     marginBottom: 20,
+    textAlign: 'center',
   },
-  image: {
-    width: width * 0.8,
-    height: height * 0.3,
-    marginBottom: 30,
-    borderRadius: 10,
-    backgroundColor: '#f0f0f0',
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    color: "#333",
+    backgroundColor: '#f9f9f9',
   },
-  actionButton: {
-    backgroundColor: '#6200ea',
-    paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 30,
+  searchInput: {
+    flex: 1,
+    height: 40,
+    fontSize: 16,
+    color: "#333",
   },
-  buttonText: {
-    color: '#fff',
+  clearButton: {
+    marginLeft: 10,
+  },
+  clearButtonText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    color: '#333',
+  },
+  resourcesList: {
+    flex: 1,
+  },
+  resourceItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#f4f4f4',
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+  resourceText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  arrow: {
+    fontSize: 18,
+    color: '#d32f2f',
   },
 });

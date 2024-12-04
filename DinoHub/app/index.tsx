@@ -14,6 +14,7 @@ import Sleep from "./Screens/Sleep";
 import EditHistorical from "./Screens/EditHistorical";
 import SleepTrends from "./Screens/SleepTrends";
 import ActiveLivingResources from "./Screens/ActiveLivingResources";
+import FitnessGoals from "./Screens/FitnessGoals";
 import Init from "./Screens/Init";
 import Profile from "./Screens/Profile";
 import SyncedWatchPage from "./Screens/SyncedWatchPage";
@@ -48,11 +49,8 @@ export default function App() {
       <Stack.Screen name="EditHistorical" component={EditHistorical} />
       <Stack.Screen name="SleepTrends" component={SleepTrends} />
       <Stack.Screen name="ActiveLivingResources" component={ActiveLivingResources} />
+      <Stack.Screen name="FitnessGoals" component={FitnessGoals} />
       <Stack.Screen name="Profile" component={Profile}/>
-      <Stack.Screen
-        name="ActiveLivingResources"
-        component={ActiveLivingResources}
-      />
       <Stack.Screen name="SyncedWatchPage" component={SyncedWatchPage} />
     </Stack.Navigator>
   );

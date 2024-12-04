@@ -13,7 +13,8 @@ export type RootStackParamList = {
   EditHistorical: undefined;
   SleepTrends: undefined;
   ActiveLivingResources: undefined;
+  FitnessGoals: undefined;
   Init:undefined;
-  Profile:undefined;
+  Profile: undefined;
   SyncedWatchPage: undefined;
 };
