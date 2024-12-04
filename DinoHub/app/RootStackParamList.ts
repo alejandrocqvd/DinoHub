@@ -13,4 +13,5 @@ export type RootStackParamList = {
   EditHistorical: undefined;
   SleepTrends: undefined;
   ActiveLivingResources: undefined;
+  SyncedWatchPage: undefined;
 };

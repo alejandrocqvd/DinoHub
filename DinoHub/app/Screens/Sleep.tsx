@@ -65,7 +65,9 @@ export default function Sleep({ navigation }: Props) {
       <View style={styles.Main}>
         <View style={styles.InnerNav}>
           <TouchableOpacity style={styles.SelectedInnerNavBtn}>
-            <Text style={styles.InnerNavBtnText}>Data Tracker</Text>
+            <Text style={[styles.InnerNavBtnText, { color: "white" }]}>
+              Data Tracker
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -80,9 +82,12 @@ export default function Sleep({ navigation }: Props) {
           <View style={styles.watchButton}>
             <TouchableOpacity
               style={styles.AddBtnBox}
-              onPress={() => navigationTool.navigate("CurrentWorkoutPageAdd")}
+              onPress={() => navigationTool.navigate("SyncedWatchPage")}
             >
-              <Icon name="clock-o" size={36} color="#333" />
+              <View style={styles.watchSyncButton}>
+                <Text style={styles.syncText}>Synced Watch Info</Text>
+                <Icon name="clock-o" size={36} color="#333" />
+              </View>
             </TouchableOpacity>
           </View>
 
@@ -229,10 +234,11 @@ const styles = StyleSheet.create({
   dateNavTitle: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#D6001C",
+    color: "black",
   },
   scrollViewContent: {
     paddingBottom: 10,
+    marginTop: 20,
   },
   header: {
     fontSize: 28,
@@ -285,5 +291,15 @@ const styles = StyleSheet.create({
   watchButton: {
     position: "absolute",
     right: "5%",
+  },
+  syncText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    paddingRight: 20,
+  },
+  watchSyncButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });

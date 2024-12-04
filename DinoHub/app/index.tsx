@@ -14,6 +14,7 @@ import Sleep from "./Screens/Sleep";
 import EditHistorical from "./Screens/EditHistorical";
 import SleepTrends from "./Screens/SleepTrends";
 import ActiveLivingResources from "./Screens/ActiveLivingResources";
+import SyncedWatchPage from "./Screens/SyncedWatchPage";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -43,7 +44,11 @@ export default function App() {
       <Stack.Screen name="Sleep" component={Sleep} />
       <Stack.Screen name="EditHistorical" component={EditHistorical} />
       <Stack.Screen name="SleepTrends" component={SleepTrends} />
-      <Stack.Screen name="ActiveLivingResources" component={ActiveLivingResources} />
+      <Stack.Screen
+        name="ActiveLivingResources"
+        component={ActiveLivingResources}
+      />
+      <Stack.Screen name="SyncedWatchPage" component={SyncedWatchPage} />
     </Stack.Navigator>
   );
 }
