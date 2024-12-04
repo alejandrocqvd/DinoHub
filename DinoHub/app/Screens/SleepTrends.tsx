@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
-    marginTop: 30,
+    marginTop: 20,
   },
   dateNavText: {
     fontSize: 24,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   scrollViewContent: {
-    paddingBottom: 150,
+    paddingBottom: 30,
     width: "100%",
   },
   header: {
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
   },
   secondContainer: {
     padding: 20,
-    paddingTop: 70,
+    paddingTop: 0,
     alignItems: "center",
     width: "100%",
   },
@@ -422,20 +422,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9f9f9",
   },
   dateLabel: {
-    fontSize: 16,
+    fontSize: 12,
     color: "#555",
     marginBottom: 4,
   },
   dateText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "500",
     color: "#000",
   },
   dateColumn: {
     paddingLeft: 40,
     paddingRight: 40,
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingTop: 0,
+    paddingBottom: 0,
   },
   graph: {
     alignItems: "center",
