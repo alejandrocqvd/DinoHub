@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 
-const { width } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
 
 export default function FitnessGoals({ navigation }: { navigation: any }) {
   const progress = 0.722; // Example: 72.2% progress
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 20,
+    marginTop: 50,
   },
   backButton: {
     color: "#007AFF",
