@@ -197,18 +197,26 @@ export const addToTemplate = (
   };
 
 export const addTemplate = (
-    // nameTemplate:string,
-    // templateData: TemplateData[],
-    // templateSets: TemplateSets[]
+    nameTemplate:string,
+    templateData: TemplateData[],
+    templateSets: TemplateSets[]
 
 
 ):void =>{
 
     console.log("We are in add template")
     const max_id = Math.max(...currentData.map((item) => item.TemplateID || 0));
-    setCurrentId(max_id+1)
+    
 
-    console.log(max_id);
+
+    const new_template:CurrentData={
+        TemplateID:max_id+1,
+        NameTemplate:nameTemplate,
+        TemplateData:templateData,
+        TemplateSets:templateSets
+    }
+
+    currentData = [...currentData,new_template]
 
 
 }

@@ -12,7 +12,7 @@ import AddButton from '../assets/CurrentWorkOutAssests/Add.svg';
 import RemoveButton from '../assets/CurrentWorkOutAssests/Minus.svg';
 import SaveButton from '../assets/CurrentWorkOutAssests/Save.svg';
 
-import { addTemplate, TemplateData } from './WorkoutSessionData';
+import { addTemplate, TemplateData, TemplateSets } from './WorkoutSessionData';
 
 const { height, width } = Dimensions.get('window');
 
@@ -23,34 +23,46 @@ export default function CurrentWorkOutAdd({ navigation }: Props) {
 
   const [exercises, setExercises] = useState<TemplateData[]>([]);
 
+  const [other,setOther] = useState<TemplateSets[]>([])
+
+  const [name,setName]= useState<string>("")
+
   const addExercise = () => {
     const newExercise = {
-      DataID: exercises.length + 1,
+      DataId: exercises.length + 1,
       DataName: `Exercise ${exercises.length + 1}`,
     };
     setExercises([...exercises, newExercise]);
+    const newOther = {
+        ExcerciseId: exercises.length+1,
+        id: other.length+1,
+        set:0,
+        reps:0,
+        weight:0
+    };
+    setOther([...other,newOther])
   };
 
   const removeExercise = () => {
     setExercises((prevExercises) => prevExercises.slice(0, -1));
+    setOther((prev)=> prev.slice(0,-1));
   };
 
-  const handleUpdateExerciseName = (id: number, name: string) => {
+  const handleUpdateExerciseName = (id: number, newName: string) => {
     setExercises((prevExercises) =>
       prevExercises.map((exercise) =>
-        exercise.DataId === id ? { ...exercise, name } : exercise
+        exercise.DataId === id ? { ...exercise, DataName: newName } : exercise
       )
     );
   };
 
+  const handleAddToTemplate = () => {
+    
+    addTemplate(name,exercises,other);
 
-
-
-
-
-
-
-
+  };
+  
+  
 
 
   return (
@@ -71,14 +83,22 @@ export default function CurrentWorkOutAdd({ navigation }: Props) {
 
         <TouchableOpacity onPress={() => {
             navigationTool.navigate('Home')
-            addTemplate();
-            
+            handleAddToTemplate()
             }}>
           <SaveButton />
         </TouchableOpacity>
       </View>
 
       <View style={styles.Content}>
+        <TextInput
+
+            style={styles.input}
+            value={name}
+            onChangeText={(text)=>setName(text)}
+            placeholder='Excercise Name'
+        
+        
+        />
         <ScrollView contentContainerStyle={styles.scrollContent}>
           {exercises.map((exercise) => (
             <View key={exercise.DataId} style={styles.exerciseBox}>
@@ -87,6 +107,8 @@ export default function CurrentWorkOutAdd({ navigation }: Props) {
                 value={exercise.DataName}
                 onChangeText={(text) => handleUpdateExerciseName(exercise.DataId, text)}
               />
+                
+
             </View>
           ))}
         </ScrollView>
@@ -144,5 +166,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#ccc',
     fontSize: 16,
+  },
+
+  Info: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    width: '100%',
+    marginVertical: 10,
   },
 });

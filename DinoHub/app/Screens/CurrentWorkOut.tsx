@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   Content: {
     flex: 1,
     justifyContent: 'center',
-    marginBottom: height * (60 / 851),
+    marginBottom: height * (60 / 851)+20,
     height: height * (450 / 851),
     marginHorizontal: "auto"
   },
