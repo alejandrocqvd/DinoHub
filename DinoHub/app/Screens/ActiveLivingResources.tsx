@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -11,28 +11,27 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
-} from 'react-native';
-import Header from './Header';
-import NavBar from './NavBar';
+} from "react-native";
+import Header from "./Header";
+import NavBar from "./NavBar";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 export default function MyComponent() {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const resources = [
-    'Resource 1',
-    'Resource 2',
-    'Resource 3',
-    'Resource 4',
-    'Resource 5',
-    'Resource 6',
-    'Resource 7',
+    "Squash Courts",
+    "Ice Skating Rink",
+    "Climbing Wall",
+    "Gym",
+    "Aquatic Centre",
+    "Mental Health Resources",
   ];
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.innerContainer}>
@@ -53,11 +52,13 @@ export default function MyComponent() {
                 value={searchText}
                 onChangeText={(text) => setSearchText(text)}
               />
-              <TouchableOpacity onPress={() => setSearchText('')} style={styles.clearButton}>
+              <TouchableOpacity
+                onPress={() => setSearchText("")}
+                style={styles.clearButton}
+              >
                 <Text style={styles.clearButtonText}>✖</Text>
               </TouchableOpacity>
             </View>
-
 
             {/* Resource Links */}
             <ScrollView style={styles.resourcesList}>
@@ -85,7 +86,7 @@ export default function MyComponent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
   innerContainer: {
     flex: 1,
@@ -96,20 +97,20 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     marginBottom: 20,
     paddingHorizontal: 10,
     color: "#333",
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
   },
   searchInput: {
     flex: 1,
@@ -122,30 +123,30 @@ const styles = StyleSheet.create({
   },
   clearButtonText: {
     fontSize: 18,
-    color: '#333',
+    color: "#333",
   },
   resourcesList: {
     flex: 1,
   },
   resourceItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#f4f4f4',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#f4f4f4",
     padding: 15,
     marginBottom: 10,
     borderRadius: 5,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
   },
   resourceText: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   arrow: {
     fontSize: 18,
-    color: '#d32f2f',
+    color: "#d32f2f",
   },
 });

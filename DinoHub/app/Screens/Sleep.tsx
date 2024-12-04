@@ -86,7 +86,7 @@ export default function Sleep({ navigation }: Props) {
             >
               <View style={styles.watchSyncButton}>
                 <Text style={styles.syncText}>Synced Watch Info</Text>
-                <Icon name="clock-o" size={36} color="#333" />
+                <Icon name="clock-o" size={20} color="#333" />
               </View>
             </TouchableOpacity>
           </View>
@@ -116,7 +116,7 @@ export default function Sleep({ navigation }: Props) {
             />
           </ScrollView>
 
-          <ScrollView contentContainerStyle={styles.resultsContainer}>
+          {/* <ScrollView contentContainerStyle={styles.resultsContainer}>
             <Text style={styles.header}>Results</Text>
             <View style={styles.resultRow}>
               <Text style={styles.label}>Sleep Duration</Text>
@@ -134,10 +134,30 @@ export default function Sleep({ navigation }: Props) {
               <Text style={styles.label}>Awakenings</Text>
               <TextInput style={styles.input} editable={false} value="2" />
             </View>
-          </ScrollView>
+          </ScrollView> */}
         </View>
       </View>
-
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.scrollableField}>
+          <Text style={styles.header}>Results</Text>
+          <View style={styles.resultRow}>
+            <Text style={styles.label}>Sleep Duration</Text>
+            <TextInput style={styles.input} editable={false} value="7h 38m" />
+          </View>
+          <View style={styles.resultRow}>
+            <Text style={styles.label}>Sleep Score</Text>
+            <TextInput style={styles.input} editable={false} value="93/100" />
+          </View>
+          <View style={styles.resultRow}>
+            <Text style={styles.label}>Avg. Heart Rate</Text>
+            <TextInput style={styles.input} editable={false} value="57 bpm" />
+          </View>
+          <View style={styles.resultRow}>
+            <Text style={styles.label}>Awakenings</Text>
+            <TextInput style={styles.input} editable={false} value="2" />
+          </View>
+        </View>
+      </ScrollView>
       <NavBar />
     </View>
   );
@@ -219,24 +239,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
-    marginTop: 30,
+    marginTop: 15,
   },
   dateNavText: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     marginHorizontal: 20,
   },
   watchText: {
-    fontSize: 12,
+    fontSize: 8,
     fontWeight: "bold",
     marginHorizontal: 20,
   },
   dateNavTitle: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: "bold",
     color: "black",
   },
   scrollViewContent: {
+    paddingTop: 50,
     paddingBottom: 10,
     marginTop: 20,
   },
@@ -283,7 +304,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   secondContainer: {
-    padding: 20,
+    padding: 0,
     backgroundColor: "#f8f8f8",
     alignItems: "center",
     width: "100%",
@@ -293,13 +314,17 @@ const styles = StyleSheet.create({
     right: "5%",
   },
   syncText: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
-    paddingRight: 20,
+    paddingRight: 10,
   },
   watchSyncButton: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  scrollableField: {
+    minWidth: "100%",
+    paddingTop: 130,
   },
 });
