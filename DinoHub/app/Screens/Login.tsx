@@ -23,8 +23,8 @@ export default function Login({navigation}:Props){
                 <TextInput placeholder='Email' style={styles.input}/>
                 <Text>Password</Text>
                 <TextInput placeholder='Password' style={styles.input}/>
-                <TouchableOpacity style={styles.LogIn}>
-                    <Text style={styles.buttonText}>
+                <TouchableOpacity style={styles.LogIn} onPress={()=>navigation.navigate('Home')}>
+                    <Text style={styles.buttonTextO}>
                         Log in
                     </Text>
                 </TouchableOpacity>
@@ -93,14 +93,6 @@ const styles = StyleSheet.create({
       SignInContainer: {
         width: "100%",
         paddingHorizontal: 16,
-      },
-      button: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        width: "100%",  
-        borderRadius: 5,
-        backgroundColor: "#D6001C",
       },
       buttonText: {
         textAlign: 'center',
