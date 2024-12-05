@@ -12,28 +12,46 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   Linking,
-} from 'react-native';
-import Header from './Header';
-import NavBar from './NavBar';
+} from "react-native";
+import Header from "./Header";
+import NavBar from "./NavBar";
 
 const { height, width } = Dimensions.get("window");
 
 export default function MyComponent() {
   const [searchText, setSearchText] = useState("");
+
   const resources = [
-    "Squash Courts",
-    "Ice Skating Rink",
-    "Climbing Wall",
-    "Gym",
-    "Aquatic Centre",
-    "Mental Health Resources",
+    {
+      name: "Squash Courts",
+      url: "https://active-living.ucalgary.ca/facilities/racquet-centre",
+    },
+    {
+      name: "Ice Skating Rink",
+      url: "https://oval.ucalgary.ca/recreational-skating-running/skating",
+    },
+    {
+      name: "Climbing Wall",
+      url: "https://outdoor-centre.ucalgary.ca/climbingbouldering-wall",
+    },
+    {
+      name: "Gym",
+      url: "https://active-living.ucalgary.ca/facilities/fitness-centre",
+    },
+    {
+      name: "Aquatic Centre",
+      url: "https://active-living.ucalgary.ca/facilities/aquatic-centre",
+    },
+    {
+      name: "Mental Health Resources",
+      url: "https://www.ucalgary.ca/wellness-services/home",
+    },
   ];
 
-  const handleResourcePress = () => {
-    // Open the URL when the resource is pressed
-    const url = 'https://active-living.ucalgary.ca/';
+  // Function to handle resource click
+  const handleResourcePress = (url: string) => {
     Linking.openURL(url).catch((err) =>
-      console.error('Failed to open URL:', err)
+      console.error("Failed to open URL:", err)
     );
   };
 
@@ -73,15 +91,15 @@ export default function MyComponent() {
             <ScrollView style={styles.resourcesList}>
               {resources
                 .filter((resource) =>
-                  resource.toLowerCase().includes(searchText.toLowerCase())
+                  resource.name.toLowerCase().includes(searchText.toLowerCase())
                 )
                 .map((resource, index) => (
                   <TouchableOpacity
                     key={index}
                     style={styles.resourceItem}
-                    onPress={handleResourcePress} // Open the URL on press
+                    onPress={() => handleResourcePress(resource.url)}
                   >
-                    <Text style={styles.resourceText}>{resource}</Text>
+                    <Text style={styles.resourceText}>{resource.name}</Text>
                     <Text style={styles.arrow}>➡️</Text>
                   </TouchableOpacity>
                 ))}
@@ -99,7 +117,7 @@ export default function MyComponent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: "#f8f8f8",
   },
   innerContainer: {
     flex: 1,
@@ -122,14 +140,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 20,
     paddingHorizontal: 10,
-    color: '#333',
-    backgroundColor: '#fff',
+    color: "#333",
+    backgroundColor: "#fff",
   },
   searchInput: {
     flex: 1,
     height: 40,
     fontSize: 16,
-    color: '#333',
+    color: "#333",
   },
   clearButton: {
     marginLeft: 10,
@@ -142,14 +160,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   resourceItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#fff",
     padding: 15,
     marginBottom: 10,
     borderRadius: 5,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 5,
     elevation: 2,
