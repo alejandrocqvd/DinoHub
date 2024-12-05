@@ -43,7 +43,7 @@ export default function SignUp({navigation}:Props){
                 
                 />
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate('Home')}>
                     <Text>
                         Register
                     </Text>

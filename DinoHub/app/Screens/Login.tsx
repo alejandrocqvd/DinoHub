@@ -42,7 +42,7 @@ export default function Login({navigation}:Props){
                 
                 />
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate('Home')}>
                     <Text>
                         Log in
                     </Text>
