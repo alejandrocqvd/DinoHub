@@ -17,4 +17,6 @@ export type RootStackParamList = {
   Init:undefined;
   Profile: undefined;
   SyncedWatchPage: undefined;
+  Login:undefined;
+  SignUp:undefined;
 };
