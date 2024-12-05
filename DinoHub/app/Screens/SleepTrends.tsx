@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
-  TextInput,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../RootStackParamList";
@@ -15,9 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Icon from "react-native-vector-icons/FontAwesome";
-import DatePicker from "react-native-date-picker";
-import { BarChart, LineChart } from "react-native-gifted-charts";
+import { BarChart } from "react-native-gifted-charts";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,9 +25,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Svg, { Line } from "react-native-svg";
 
-// Register the required chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -43,6 +38,7 @@ ChartJS.register(
 
 type Props = NativeStackScreenProps<RootStackParamList, "SleepTrends">;
 const { height, width } = Dimensions.get("window");
+
 export default function SleepTrends({ navigation }: Props) {
   const navigationTool =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -55,7 +51,7 @@ export default function SleepTrends({ navigation }: Props) {
   const [isStartDatePickerVisible, setStartDatePickerVisibility] =
     useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
-  // Handlers for date navigation
+
   const handlePreviousDate = () => {
     const previousDate = new Date(currentDate);
     previousDate.setDate(previousDate.getDate() - 1);
@@ -154,6 +150,7 @@ export default function SleepTrends({ navigation }: Props) {
     { value: 48, label: "Sat" },
     { value: 55, label: "Sun" },
   ];
+
   return (
     <View style={styles.container}>
       <Header />
@@ -172,15 +169,7 @@ export default function SleepTrends({ navigation }: Props) {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* BELOW IS FOR GRAPH SELECTION PAGE IF TIME PERMITS */}
-      {/* <View style={styles.graphButton}>
-        <TouchableOpacity
-          style={styles.AddBtnBox}
-          onPress={() => navigationTool.navigate("CurrentWorkoutPageAdd")}
-        >
-          <Icon name="clock-o" size={36} color="#333" />
-        </TouchableOpacity>
-      </View> */}
+
       <View style={styles.secondContainer}>
         <View style={styles.resultsContainer}>
           <Text style={styles.header}>Date Range Filter</Text>
@@ -220,6 +209,7 @@ export default function SleepTrends({ navigation }: Props) {
           </View>
         </View>
       </View>
+
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.scrollableField}>
           <View style={styles.singleGraph}>
@@ -228,6 +218,10 @@ export default function SleepTrends({ navigation }: Props) {
                 data={dailySleepData}
                 maxValue={12}
                 frontColor={"#D6001C"}
+                width={width - 40}
+                height={200}
+                showText
+                textSize={14}
               />
               <Text style={styles.graphTitle}>
                 {"Average Sleep Duration Per Day"}
@@ -236,7 +230,14 @@ export default function SleepTrends({ navigation }: Props) {
           </View>
           <View style={styles.singleGraph}>
             <View style={styles.graph}>
-              <BarChart data={dailySleepScoreData} frontColor={"#D6001C"} />
+              <BarChart
+                data={dailySleepScoreData}
+                frontColor={"#D6001C"}
+                width={width - 40}
+                height={200}
+                showText
+                textSize={14}
+              />
               <Text style={styles.graphTitle}>
                 {"Average Sleep Score Per Day"}
               </Text>
@@ -244,7 +245,14 @@ export default function SleepTrends({ navigation }: Props) {
           </View>
           <View style={styles.singleGraph}>
             <View style={styles.graph}>
-              <BarChart data={dailyHeartRateData} frontColor={"#D6001C"} />
+              <BarChart
+                data={dailyHeartRateData}
+                frontColor={"#D6001C"}
+                width={width - 40}
+                height={200}
+                showText
+                textSize={14}
+              />
               <Text style={styles.graphTitle}>
                 {"Average Heart Rate Per Day"}
               </Text>
@@ -259,50 +267,31 @@ export default function SleepTrends({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: "#f8f8f8",
-    display: "flex",
-    //justifyContent: "space-between",
     alignItems: "center",
-    flex: 1,
     width: "100%",
   },
-
-  Main: {
-    display: "flex",
-    // flexDirection:'column',
-    // marginTop:-116,
-    flex: 1,
-    //justifyContent: "space-between",
-    //height: height * (670 / 851),
-    width: "100%",
-  },
-
   InnerNav: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
-    height: height * (74 / 851),
     width: "100%",
     marginBottom: 20,
   },
   SelectedInnerNavBtn: {
     width: "50%",
-    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: height * 0.08695,
     borderRightColor: "black",
     borderRightWidth: 1,
     borderBottomColor: "black",
-    borderColor: "black",
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    color: "white",
     backgroundColor: "#D6001C",
   },
   InnerNavBtn: {
     width: "50%",
-    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: height * 0.08695,
@@ -310,150 +299,82 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderBottomColor: "black",
     borderBottomWidth: 1,
+    backgroundColor: "#FFFFFF",
   },
   InnerNavBtnText: {
     fontSize: 25,
     fontWeight: 800,
   },
-
-  AddBtnBox: {
-    backgroundColor: "#D6001C",
-    borderRadius: 25,
-    padding: 10,
-    elevation: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-  },
-  dateNav: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    marginTop: 20,
-  },
-  dateNavText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginHorizontal: 20,
-  },
-  dateNavTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#D6001C",
-    backgroundColor: "#fff",
-  },
-  scrollViewContent: {
-    paddingBottom: 30,
+  secondContainer: {
     width: "100%",
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "left",
-    marginBottom: 5,
+    paddingHorizontal: 20,
   },
   resultsContainer: {
-    padding: 10,
     backgroundColor: "white",
+    padding: 10,
     borderRadius: 8,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    width: 500,
-  },
-  resultRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flex: 1,
-    padding: 0,
-    minWidth: "100%",
-  },
-  resultColumn: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-    flex: 1,
-    padding: 10,
-    width: "50%",
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#D6001C",
-    paddingRight: 20,
-    textAlign: "center",
-    padding: 20,
-  },
-  input: {
-    backgroundColor: "#fff",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    minWidth: 80,
-    textAlign: "center",
-    fontSize: 14,
-    color: "#333",
-  },
-  secondContainer: {
-    padding: 20,
-    paddingTop: 0,
-    alignItems: "center",
+    marginBottom: 20,
     width: "100%",
+    maxWidth: 500,
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#D6001C",
+    marginBottom: 10,
   },
   dateRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  dateContainer: {
-    flex: 1,
-    alignItems: "center",
-    marginHorizontal: 8,
-    padding: 12,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    backgroundColor: "#f9f9f9",
-  },
-  dateLabel: {
-    fontSize: 12,
-    color: "#555",
-    marginBottom: 4,
-  },
-  dateText: {
-    fontSize: 14,
-    fontWeight: "500",
-    color: "#000",
+    width: "100%",
   },
   dateColumn: {
-    paddingLeft: 40,
-    paddingRight: 40,
-    paddingTop: 0,
-    paddingBottom: 0,
+    width: "48%",
+    paddingHorizontal: 10,
   },
-  graph: {
-    alignItems: "center",
-    backgroundColor: "white",
-    padding: 40,
+  dateLabel: {
+    fontSize: 14,
+    color: "#444",
   },
-  graphTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#D6001C",
-    padding: 20,
+  dateNavTitle: {
+    fontSize: 16,
+    color: "#888",
+    marginTop: 5,
+  },
+  scrollViewContent: {
+    paddingBottom: 30,
+    width: "100%",
+    paddingHorizontal: 20,
   },
   scrollableField: {
-    minWidth: "100%",
+    width: "100%",
+    marginBottom: 90,
   },
   singleGraph: {
     paddingBottom: 20,
+    width: "100%",
   },
-  graphButton: {
-    position: "absolute",
-    right: "5%",
+  graph: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    width: "100%",
+    alignItems: "center",
+  },
+  graphTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#D6001C",
+    paddingTop: 10,
+    textAlign: "center",
   },
 });

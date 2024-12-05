@@ -80,13 +80,11 @@ export default function Sleep({ navigation }: Props) {
   const onDayPress = (day: { dateString: string }) => {
     setSelectedDate(day.dateString);
 
-    // Check if the selected date is today's date
+
     const today = new Date().toISOString().split("T")[0];
 
-    // If it's not today's date, clear the workout data
     if (day.dateString !== today) {
     } else {
-      // Set default workout data for today's date
     }
   };
 
@@ -122,7 +120,6 @@ export default function Sleep({ navigation }: Props) {
                 .toISOString()
                 .split("T")[0]
             }
-            // Restricts future dates
           />
         </View>
 
@@ -330,6 +327,7 @@ const styles = StyleSheet.create({
   scrollableField: {
     minWidth: "100%",
     paddingTop: 20,
+    marginBottom: 100,
   },
   ContentSection: {
     flexGrow: 1,
