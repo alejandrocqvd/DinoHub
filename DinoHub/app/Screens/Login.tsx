@@ -13,7 +13,7 @@ export default function Login({navigation}:Props){
     return(
         <View style={styles.container}>
             <View style={styles.Header}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate('Init')}>
                     <Back />
                 </TouchableOpacity>
                 <Text style={styles.HeaderText}>Log in</Text>
