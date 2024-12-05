@@ -76,17 +76,15 @@ export default function CurrentWorkOut({ navigation }: Props) {
       <Header />
       <View style={styles.Main}>
         <View style={styles.InnerNav}>
-          <TouchableOpacity
-            style={[styles.InnerNavBtn, { backgroundColor: "#D6001C" }]}
-          >
+          <TouchableOpacity style={styles.SelectedInnerNavBtn}>
             <Text style={[styles.InnerNavBtnText, { color: "white" }]}>
               Templates
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigationTool.navigate("History")}
             style={styles.InnerNavBtn}
+            onPress={() => navigationTool.navigate("History")}
           >
             <Text style={styles.InnerNavBtnText}>History</Text>
           </TouchableOpacity>
@@ -346,5 +344,21 @@ const styles = StyleSheet.create({
   modalButtonText: {
     color: "white",
     fontWeight: "bold",
+  },
+
+  SelectedInnerNavBtn: {
+    width: "50%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: height * 0.08695,
+    borderRightColor: "black",
+    borderRightWidth: 1,
+    borderBottomColor: "black",
+    borderColor: "black",
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    color: "white",
+    backgroundColor: "#D6001C",
   },
 });

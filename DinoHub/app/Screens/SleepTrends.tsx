@@ -284,8 +284,6 @@ const styles = StyleSheet.create({
     height: height * (74 / 851),
     width: "100%",
     marginBottom: 20,
-    // flex:2
-    // paddingBottom:height*(595/851)
   },
   SelectedInnerNavBtn: {
     width: "50%",

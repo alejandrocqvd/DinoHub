@@ -14,8 +14,8 @@ import NavBar from "./NavBar";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { Calendar } from "react-native-calendars";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Sleep">;
 const { height, width } = Dimensions.get("window");
@@ -24,6 +24,12 @@ export default function Sleep({ navigation }: Props) {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const [sleepData, setSleepData] = useState({
+    sets: 24,
+    reps: 192,
+    weight: 0,
+  });
 
   const checkDate = () => {
     if (currentDate.toDateString() === new Date().toDateString()) {
@@ -58,27 +64,73 @@ export default function Sleep({ navigation }: Props) {
     setCurrentDate(date);
     hideDatePicker();
   };
+  // State to manage the selected date and workout data
+  const [selectedDate, setSelectedDate] = useState<string>(
+    new Date().toISOString().split("T")[0]
+  );
+
+  const formatDate = (date: string) => {
+    const dateObj = new Date(date);
+    dateObj.setDate(dateObj.getDate() + 1);
+    return `${dateObj.getDate()}/${
+      dateObj.getMonth() + 1
+    }/${dateObj.getFullYear()}`;
+  };
+
+  const onDayPress = (day: { dateString: string }) => {
+    setSelectedDate(day.dateString);
+
+    // Check if the selected date is today's date
+    const today = new Date().toISOString().split("T")[0];
+
+    // If it's not today's date, clear the workout data
+    if (day.dateString !== today) {
+    } else {
+      // Set default workout data for today's date
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header />
+      <View style={styles.InnerNav}>
+        <TouchableOpacity style={styles.SelectedInnerNavBtn}>
+          <Text style={[styles.InnerNavBtnText, { color: "white" }]}>
+            Data Tracker
+          </Text>
+        </TouchableOpacity>
 
-      <View style={styles.Main}>
-        <View style={styles.InnerNav}>
-          <TouchableOpacity style={styles.SelectedInnerNavBtn}>
-            <Text style={[styles.InnerNavBtnText, { color: "white" }]}>
-              Data Tracker
-            </Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.InnerNavBtn}
+          onPress={() => navigationTool.navigate("SleepTrends")}
+        >
+          <Text style={styles.InnerNavBtnText}>Sleep Trends</Text>
+        </TouchableOpacity>
+      </View>
 
-          <TouchableOpacity
-            style={styles.InnerNavBtn}
-            onPress={() => navigationTool.navigate("SleepTrends")}
-          >
-            <Text style={styles.InnerNavBtnText}>Sleep Trends</Text>
-          </TouchableOpacity>
+      <ScrollView contentContainerStyle={styles.ContentSection}>
+        <View style={styles.CalendarSection}>
+          <Calendar
+            style={styles.CalendarDesign}
+            current={selectedDate}
+            onDayPress={onDayPress}
+            markedDates={{
+              [selectedDate]: { selected: true, selectedColor: "#D6001C" },
+            }}
+            maxDate={
+              new Date(new Date().setDate(new Date().getDate() - 1))
+                .toISOString()
+                .split("T")[0]
+            }
+            // Restricts future dates
+          />
         </View>
 
-        <View style={styles.secondContainer}>
+        <View style={styles.ContentHeader}>
+          <Text style={styles.ContentHeadersmthn}>
+            {formatDate(selectedDate)}
+          </Text>
+
           <View style={styles.watchButton}>
             <TouchableOpacity
               style={styles.AddBtnBox}
@@ -90,54 +142,7 @@ export default function Sleep({ navigation }: Props) {
               </View>
             </TouchableOpacity>
           </View>
-
-          <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <View style={styles.dateNav}>
-              <TouchableOpacity onPress={handlePreviousDate}>
-                <Text style={styles.dateNavText}>{"<"}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={showDatePicker}>
-                <Text style={styles.dateNavTitle}>
-                  {currentDate.toDateString() === new Date().toDateString()
-                    ? "Today"
-                    : currentDate.toDateString()}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleNextDate}>
-                <Text style={styles.dateNavText}>{">"}</Text>
-              </TouchableOpacity>
-            </View>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-              date={currentDate}
-            />
-          </ScrollView>
-
-          {/* <ScrollView contentContainerStyle={styles.resultsContainer}>
-            <Text style={styles.header}>Results</Text>
-            <View style={styles.resultRow}>
-              <Text style={styles.label}>Sleep Duration</Text>
-              <TextInput style={styles.input} editable={false} value="7h 38m" />
-            </View>
-            <View style={styles.resultRow}>
-              <Text style={styles.label}>Sleep Score</Text>
-              <TextInput style={styles.input} editable={false} value="93/100" />
-            </View>
-            <View style={styles.resultRow}>
-              <Text style={styles.label}>Avg. Heart Rate</Text>
-              <TextInput style={styles.input} editable={false} value="57 bpm" />
-            </View>
-            <View style={styles.resultRow}>
-              <Text style={styles.label}>Awakenings</Text>
-              <TextInput style={styles.input} editable={false} value="2" />
-            </View>
-          </ScrollView> */}
         </View>
-      </View>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.scrollableField}>
           <Text style={styles.header}>Results</Text>
           <View style={styles.resultRow}>
@@ -158,6 +163,7 @@ export default function Sleep({ navigation }: Props) {
           </View>
         </View>
       </ScrollView>
+
       <NavBar />
     </View>
   );
@@ -190,8 +196,6 @@ const styles = StyleSheet.create({
     height: height * (74 / 851),
     width: "100%",
     marginBottom: 20,
-    // flex:2
-    // paddingBottom:height*(595/851)
   },
   SelectedInnerNavBtn: {
     width: "50%",
@@ -325,6 +329,61 @@ const styles = StyleSheet.create({
   },
   scrollableField: {
     minWidth: "100%",
-    paddingTop: 130,
+    paddingTop: 20,
+  },
+  ContentSection: {
+    flexGrow: 1,
+    marginHorizontal: 20,
+    marginBottom: 50,
+    paddingBottom: 15,
+  },
+  CalendarSection: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 20,
+  },
+  CalendarDesign: {
+    width: 300,
+    height: 310,
+    borderRadius: 10,
+  },
+  ContentHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  ContentHeadersmthn: {
+    width: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 24,
+    fontWeight: "700",
   },
 });
+
+{
+  /* <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.scrollableField}>
+          <Text style={styles.header}>Results</Text>
+          <View style={styles.resultRow}>
+            <Text style={styles.label}>Sleep Duration</Text>
+            <TextInput style={styles.input} editable={false} value="7h 38m" />
+          </View>
+          <View style={styles.resultRow}>
+            <Text style={styles.label}>Sleep Score</Text>
+            <TextInput style={styles.input} editable={false} value="93/100" />
+          </View>
+          <View style={styles.resultRow}>
+            <Text style={styles.label}>Avg. Heart Rate</Text>
+            <TextInput style={styles.input} editable={false} value="57 bpm" />
+          </View>
+          <View style={styles.resultRow}>
+            <Text style={styles.label}>Awakenings</Text>
+            <TextInput style={styles.input} editable={false} value="2" />
+          </View>
+        </View>
+      </ScrollView> */
+}
