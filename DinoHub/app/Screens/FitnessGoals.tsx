@@ -1,35 +1,30 @@
 import React from "react";
 import { View, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Back from "../assets/ProfileAssets/arrow_back.svg";
 
-const { height, width } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export default function FitnessGoals({ navigation }: { navigation: any }) {
-  const progress = 0.722; // Example: 72.2% progress
+  const progress = 0.72; // Example: 72% progress
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backButton}>Back</Text>
+          <Back />
         </TouchableOpacity>
-        <Text style={styles.title}>Set Goals</Text>
+        <Text style={styles.title}>Goals</Text>
       </View>
 
       {/* Progress Section */}
-      <View style={styles.progressContainer}>
-        <View>
-          <Text style={styles.progressText}>Training 10/12</Text>
-          <Text style={styles.progressText}>Nutrition 2/3</Text>
-          <Text style={styles.progressText}>Recovery 2/3</Text>
+      <View style={styles.progressSection}>
+        <Text style={styles.progressLabel}> Training 10/12           Nutrition 2/3           Recovery 2/3</Text>
+        <View style={styles.progressBarContainer}>
+          <View style={[styles.progressBar, { width: `${progress * 100}%` }]} />
         </View>
-
-        {/* Progress Circle */}
-        <View style={styles.progressCircle}>
-          <View style={[styles.circle, { transform: [{ rotate: `${progress * 360}deg` }] }]} />
-          <Text style={styles.percentageText}>{(progress * 100).toFixed(1)}%</Text>
-        </View>
+        <Text style={styles.progressPercentage}>{Math.round(progress * 100)}%</Text>
       </View>
 
       {/* Input Fields */}
@@ -41,7 +36,7 @@ export default function FitnessGoals({ navigation }: { navigation: any }) {
         <TextInput style={styles.input} placeholder="Weight" placeholderTextColor="#999" />
 
         <Text style={styles.label}>Weight Goal</Text>
-        <TextInput style={styles.input} placeholder="Weight Goal" placeholderTextColor="#999" />
+        <TextInput style={styles.input} placeholder="Goal" placeholderTextColor="#999" />
 
         <Text style={styles.label}>Calorie Intake</Text>
         <TextInput style={styles.input} placeholder="Calories" placeholderTextColor="#999" />
@@ -60,62 +55,48 @@ export default function FitnessGoals({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 20,
+    backgroundColor: "#f8f8f8",
   },
   header: {
+    display: "flex",
+    backgroundColor: "#D6001C",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 20,
-  },
-  backButton: {
-    color: "#007AFF",
-    fontSize: 16,
+    padding: 10,
   },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#000",
-    textAlign: "center",
+    color: "white",
+    fontSize: 32,
+    marginLeft: 120,
   },
-  progressContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 20,
+  progressSection: {
+    margin: 20,
   },
-  progressText: {
+  progressLabel: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: "#333",
+  },
+  progressBarContainer: {
+    height: 20,
+    backgroundColor: "#e0e0e0",
+    borderRadius: 10,
+    overflow: "hidden",
+    marginBottom: 8,
+  },
+  progressBar: {
+    height: "100%",
+    backgroundColor: "#d32f2f",
+    borderRadius: 10,
+  },
+  progressPercentage: {
     fontSize: 16,
     color: "#333",
-    marginBottom: 5,
-  },
-  progressCircle: {
-    width: width * 0.3,
-    height: width * 0.3,
-    borderRadius: (width * 0.3) / 2,
-    borderWidth: 10,
-    borderColor: "#d32f2f",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
-    position: "relative",
-  },
-  circle: {
-    width: "100%",
-    height: "100%",
-    borderWidth: 10,
-    borderColor: "rgba(211, 47, 47, 0.3)",
-    borderRadius: 1000,
-    position: "absolute",
-  },
-  percentageText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#d32f2f",
+    textAlign: "right",
   },
   inputContainer: {
-    marginTop: 20,
+    flex: 1,
+    paddingHorizontal: 20,
   },
   label: {
     fontSize: 16,
@@ -123,13 +104,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   input: {
+    width: "100%",
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
-    fontSize: 16,
-    color: "#333",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#fff",
   },
 });
